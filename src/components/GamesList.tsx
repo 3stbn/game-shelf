@@ -2,9 +2,11 @@ import React from 'react'
 
 import GameCard from '../components/GameCard'
 import GameTile from '../components/GameTile'
-import { FlatList, SafeAreaView } from 'react-native'
+import { FlatList, SafeAreaView, Dimensions } from 'react-native'
 
 import { SavedGame, GamesListViewType } from '../types'
+
+const WIDTH = Dimensions.get('screen').width
 
 const GamesList = ({ games, viewType }: { games: Array<SavedGame>; viewType: GamesListViewType }) => (
     <SafeAreaView style={{ flex: 1 }}>
@@ -18,9 +20,11 @@ const GamesList = ({ games, viewType }: { games: Array<SavedGame>; viewType: Gam
         {viewType === 'grid' && (
             <FlatList
                 data={games}
-                numColumns={4}
+                numColumns={WIDTH > 320 ? 4 : WIDTH > 250 ? 3 : 2}
                 keyExtractor={item => item.slug}
-                renderItem={({ item }) => <GameTile game={item} width="25%" />}
+                renderItem={({ item }) => (
+                    <GameTile game={item} width={WIDTH > 340 ? '25%' : WIDTH > 250 ? '33%' : '50%'} />
+                )}
             />
         )}
     </SafeAreaView>

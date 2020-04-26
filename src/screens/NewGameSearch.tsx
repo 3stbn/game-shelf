@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { TextInput, List, Provider, Chip, Divider, ActivityIndicator } from 'react-native-paper'
 import Container from '../components/Container'
-import { ScrollView, View, processColor } from 'react-native'
+import { ScrollView, View } from 'react-native'
 import { Game, GameRoute } from '../types'
 import { IGDB_USER_KEY } from '../../.env.json'
 
@@ -113,7 +113,14 @@ function NewGame({ navigation }: { navigation: NavigationStackProp }) {
         <Provider>
             <Container>
                 <View>
-                    <TextInput mode="outlined" label="Title" value={title} onChangeText={handleSearch} autoFocus />
+                    <TextInput
+                        mode="outlined"
+                        label="Title"
+                        value={title}
+                        onChangeText={handleSearch}
+                        autoFocus
+                        disabled={loadingRoute}
+                    />
 
                     {loading && (
                         <ActivityIndicator style={{ marginLeft: -35, position: 'absolute', right: 13, top: 22 }} />

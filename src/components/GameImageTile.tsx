@@ -5,7 +5,7 @@ import { Game } from '../types'
 import { Image } from 'react-native'
 
 function GameImageTile({ game, noMargin, mode }: { game: Game; noMargin?: boolean; mode?: 'list' | 'tile' }) {
-    const medCover = `https://images.igdb.com/igdb/image/upload/t_cover_med/${game.coverImgId}.jpg`
+    const bigCover = `https://images.igdb.com/igdb/image/upload/t_cover_big/${game.coverImgId}.jpg`
     const thumbCover = `https://images.igdb.com/igdb/image/upload/t_thumb/${game.coverImgId}.jpg`
 
     const imageDimensions = {
@@ -24,7 +24,7 @@ function GameImageTile({ game, noMargin, mode }: { game: Game; noMargin?: boolea
             <Image
                 source={
                     game.coverImgId
-                        ? { uri: mode === 'tile' ? thumbCover : medCover }
+                        ? { uri: mode === 'tile' ? thumbCover : bigCover }
                         : game.background_image
                         ? { uri: game.background_image }
                         : 0
