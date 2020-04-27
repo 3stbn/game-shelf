@@ -1,6 +1,6 @@
 import React from 'react'
 import { View } from 'react-native'
-import { RadioButton, Caption, TouchableRipple } from 'react-native-paper'
+import { RadioButton, Caption, TouchableRipple, Colors } from 'react-native-paper'
 import { getText } from '../utils/locale'
 import { Ownership } from '../types'
 
@@ -18,6 +18,7 @@ export default function GameTypeSelector({
                     <RadioButton
                         value="owned"
                         status={ownership === 'owned' ? 'checked' : 'unchecked'}
+                        color={Colors.teal300}
                         onPress={() => {
                             setOwnership('owned')
                         }}

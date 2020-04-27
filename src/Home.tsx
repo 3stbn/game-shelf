@@ -13,6 +13,7 @@ import GamesList from './components/GamesList'
 import { Colors, IconButton } from 'react-native-paper'
 import NoGamesBanner from './components/NoGamesBanner'
 import PlatformTags from './components/PlatformTags'
+
 import _ from 'lodash'
 
 import SetListView from './components/SetListView'
@@ -84,6 +85,7 @@ function Home({ navigation }: { navigation: NavigationStackProp }) {
                 )
             case 'wishList':
                 return <GamesList games={filteredGames.filter(g => g.ownership === 'wishList')} viewType={listView} />
+
             default:
                 return null
         }
@@ -141,41 +143,51 @@ function Home({ navigation }: { navigation: NavigationStackProp }) {
                 tabBarPosition="top"
                 renderTabBar={props => (
                     <View>
-                        <TabBar
-                            {...props}
-                            scrollEnabled
-                            tabStyle={{
-                                backgroundColor: Colors.white,
-                                borderBottomColor: Colors.deepPurple300,
-                                borderBottomWidth: 1,
-                                borderTopColor: Colors.deepPurple200,
-                                borderTopWidth: 1
-                            }}
-                            activeColor={Colors.deepPurple600}
-                            inactiveColor={Colors.deepPurple100}
-                            pressColor={Colors.deepPurple200}
-                            renderIcon={({ route, color }) => (
-                                <IconButton
-                                    style={{ margin: 0 }}
-                                    icon={
-                                        route.key === 'backlog'
-                                            ? 'library-shelves'
-                                            : route.key === 'inProgress'
-                                            ? 'gamepad-variant'
-                                            : route.key === 'played'
-                                            ? 'gamepad'
-                                            : route.key === 'completed'
-                                            ? 'checkbox-marked-circle-outline'
-                                            : 'heart'
-                                    }
-                                    color={color}
-                                    size={20}
-                                />
-                            )}
-                        />
+                        <View>
+                            <TabBar
+                                {...props}
+                                scrollEnabled
+                                tabStyle={{
+                                    backgroundColor: Colors.white,
+                                    borderBottomColor: Colors.deepPurple300,
+                                    borderBottomWidth: 1,
+                                    borderTopColor: Colors.deepPurple200,
+                                    borderTopWidth: 1
+                                }}
+                                activeColor={Colors.deepPurple600}
+                                inactiveColor={Colors.deepPurple100}
+                                pressColor={Colors.deepPurple200}
+                                renderIcon={({ route, color }) => (
+                                    <IconButton
+                                        style={{ margin: 0 }}
+                                        icon={
+                                            route.key === 'backlog'
+                                                ? 'library-shelves'
+                                                : route.key === 'inProgress'
+                                                ? 'gamepad-variant'
+                                                : route.key === 'played'
+                                                ? 'gamepad'
+                                                : route.key === 'completed'
+                                                ? 'checkbox-marked-circle-outline'
+                                                : 'heart'
+                                        }
+                                        color={color}
+                                        size={20}
+                                    />
+                                )}
+                            />
+                        </View>
+
                         {games.length === 0 && <NoGamesBanner setShowBanner={setShowBanner} showBanner={showBanner} />}
                         {games.length > 0 && (
-                            <View style={{ paddingTop: 15, paddingBottom: 15, paddingLeft: 15, flexDirection: 'row' }}>
+                            <View
+                                style={{
+                                    paddingTop: 15,
+                                    paddingBottom: 15,
+                                    paddingLeft: 15,
+                                    flexDirection: 'row'
+                                }}
+                            >
                                 <SetListView setListView={setListView} listView={listView} />
 
                                 <PlatformTags
@@ -183,6 +195,16 @@ function Home({ navigation }: { navigation: NavigationStackProp }) {
                                     horizontal
                                     selected={selectedPlatForms}
                                     handleChip={handleSelectedPlatforms}
+                                />
+
+                                <IconButton
+                                    icon="magnify"
+                                    color={Colors.teal400}
+                                    size={24}
+                                    style={{ marginTop: -3 }}
+                                    onPress={() => {
+                                        navigation.navigate(getText('searchGame'), { games })
+                                    }}
                                 />
                             </View>
                         )}
@@ -193,6 +215,7 @@ function Home({ navigation }: { navigation: NavigationStackProp }) {
                 onIndexChange={setIndex}
                 initialLayout={initialLayout}
             />
+
             <NewGameFab currentRoute={routes.find((r, idx) => idx === index) || routes[0]} />
         </View>
     )

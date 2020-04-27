@@ -5,6 +5,7 @@ import { createStackNavigator } from 'react-navigation-stack'
 import { getText } from './src/utils/locale'
 import NewGame from './src/screens/NewGameSearch'
 import Game from './src/screens/Game'
+import SearchGame from './src/screens/SearchGame'
 
 const AppNavigator = createStackNavigator({
     [getText('home')]: {
@@ -15,6 +16,9 @@ const AppNavigator = createStackNavigator({
     },
     [getText('game')]: {
         screen: Game
+    },
+    [getText('searchGame')]: {
+        screen: SearchGame
     }
 })
 

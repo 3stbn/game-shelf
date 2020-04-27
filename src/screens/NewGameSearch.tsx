@@ -115,7 +115,7 @@ function NewGame({ navigation }: { navigation: NavigationStackProp }) {
                 <View>
                     <TextInput
                         mode="outlined"
-                        label="Title"
+                        label={getText('newGameName')}
                         value={title}
                         onChangeText={handleSearch}
                         autoFocus
