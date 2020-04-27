@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { View, Dimensions } from 'react-native'
 import NewGameFab from './components/NewGameFab'
 import { getGames } from './utils/localStorage'
-import { SavedGame, GameRoute, Platform, PlatformsAccumulator, SelectedPlatform, GamesListViewType } from './types'
+import { SavedGame, GameRoute, Platform, PlatformsAccumulator, SelectedPlatform } from './types'
 import { withNavigation } from 'react-navigation'
 import { NavigationStackProp } from 'react-navigation-stack'
 import { TabView, TabBar } from 'react-native-tab-view'
@@ -15,8 +15,6 @@ import NoGamesBanner from './components/NoGamesBanner'
 import PlatformTags from './components/PlatformTags'
 
 import _ from 'lodash'
-
-import SetListView from './components/SetListView'
 
 const initialLayout = { width: Dimensions.get('window').width, flex: 1 }
 
@@ -35,7 +33,6 @@ function Home({ navigation }: { navigation: NavigationStackProp }) {
     const [showBanner, setShowBanner] = useState(false)
 
     const [platforms, setPlatforms] = useState<Array<Platform>>([])
-    const [listView, setListView] = useState<GamesListViewType>('grid')
 
     const [filteredGames, setFilteredGames] = useState<Array<SavedGame>>([])
 
@@ -59,32 +56,32 @@ function Home({ navigation }: { navigation: NavigationStackProp }) {
                 return (
                     <GamesList
                         games={filteredGames.filter(g => g.ownership === 'owned' && g.status === 'backlog')}
-                        viewType={listView}
+                        viewType="grid"
                     />
                 )
             case 'inProgress':
                 return (
                     <GamesList
                         games={filteredGames.filter(g => g.ownership === 'owned' && g.status === 'inProgress')}
-                        viewType={listView}
+                        viewType="grid"
                     />
                 )
             case 'played':
                 return (
                     <GamesList
                         games={filteredGames.filter(g => g.ownership === 'owned' && g.status === 'played')}
-                        viewType={listView}
+                        viewType="grid"
                     />
                 )
             case 'completed':
                 return (
                     <GamesList
                         games={filteredGames.filter(g => g.ownership === 'owned' && g.status === 'completed')}
-                        viewType={listView}
+                        viewType="grid"
                     />
                 )
             case 'wishList':
-                return <GamesList games={filteredGames.filter(g => g.ownership === 'wishList')} viewType={listView} />
+                return <GamesList games={filteredGames.filter(g => g.ownership === 'wishList')} viewType="grid" />
 
             default:
                 return null
@@ -188,8 +185,6 @@ function Home({ navigation }: { navigation: NavigationStackProp }) {
                                     flexDirection: 'row'
                                 }}
                             >
-                                <SetListView setListView={setListView} listView={listView} />
-
                                 <PlatformTags
                                     platforms={platforms}
                                     horizontal

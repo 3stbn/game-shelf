@@ -3,6 +3,7 @@ import React from 'react'
 import { IconButton, Colors } from 'react-native-paper'
 import { GamesListViewType } from '../types'
 
+//TODO: implement when performance is improved and stored as a setting
 const SetListView = ({ listView, setListView }: { listView: GamesListViewType; setListView: Function }) => {
     return (
         <IconButton
