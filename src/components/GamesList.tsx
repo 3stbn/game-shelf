@@ -12,6 +12,7 @@ const GamesList = ({ games, viewType }: { games: Array<SavedGame>; viewType: Gam
     <SafeAreaView style={{ flex: 1 }}>
         {viewType === 'list' && (
             <FlatList
+                keyboardShouldPersistTaps={'handled'}
                 data={games}
                 keyExtractor={item => item.slug}
                 renderItem={({ item }) => <GameCard pressable game={item} showProgress />}

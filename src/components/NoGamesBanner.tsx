@@ -1,30 +1,18 @@
 import React from 'react'
-import { Image } from 'react-native'
+
 import { Banner } from 'react-native-paper'
 import { getText } from '../utils/locale'
 import { withNavigation } from 'react-navigation'
 import { NavigationStackProp } from 'react-navigation-stack'
 
-function NoGamesBanner({
-    navigation,
-    showBanner,
-    setShowBanner
-}: {
-    navigation: NavigationStackProp
-    showBanner: boolean
-    setShowBanner: Function
-}) {
+function NoGamesBanner({ navigation }: { navigation: NavigationStackProp }) {
     return (
         <Banner
-            visible={showBanner}
+            visible={true}
             actions={[
                 {
                     label: getText('addNewGame'),
                     onPress: () => navigation.navigate(getText('newGame'))
-                },
-                {
-                    label: getText('close'),
-                    onPress: () => setShowBanner(false)
                 }
             ]}
             icon="gamepad"

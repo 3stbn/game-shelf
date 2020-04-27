@@ -1,7 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState } from 'react'
 import { TextInput, List, Provider, Chip, Divider, ActivityIndicator } from 'react-native-paper'
 import Container from '../components/Container'
-import { ScrollView, View } from 'react-native'
+import { View } from 'react-native'
 import { Game, GameRoute } from '../types'
 import { IGDB_USER_KEY } from '../../.env.json'
 
@@ -12,13 +13,14 @@ import PlatformTags from '../components/PlatformTags'
 import GameImageTile from '../components/GameImageTile'
 import { retrieveGame } from '../utils/localStorage'
 import Loading from '../components/Loading'
+import { FlatList } from 'react-native-gesture-handler'
 
 function NewGame({ navigation }: { navigation: NavigationStackProp }) {
     const route: GameRoute = navigation.getParam('route')
 
-    const [title, setTitle] = useState('')
+    const [search, setSearch] = useState('')
     const [timer, setTimer] = useState(0)
-    const [games, setGames] = useState([])
+    const [games, setGames] = useState<Array<Game>>([])
     const [loading, setLoading] = useState(false)
     const [loadingRoute, setLoadingRoute] = useState(false)
 
@@ -36,7 +38,7 @@ function NewGame({ navigation }: { navigation: NavigationStackProp }) {
     }
 
     const handleSearch = (text: string) => {
-        setTitle(text)
+        setSearch(text)
         setLoading(true)
         if (!text) {
             return
@@ -116,7 +118,7 @@ function NewGame({ navigation }: { navigation: NavigationStackProp }) {
                     <TextInput
                         mode="outlined"
                         label={getText('newGameName')}
-                        value={title}
+                        value={search}
                         onChangeText={handleSearch}
                         autoFocus
                         disabled={loadingRoute}
@@ -129,37 +131,35 @@ function NewGame({ navigation }: { navigation: NavigationStackProp }) {
                 {loadingRoute ? (
                     <Loading />
                 ) : (
-                    <View>
-                        {games.length > 0 && title !== '' && (
-                            <ScrollView>
-                                {games.map((game: Game) => (
-                                    <View key={game.id}>
-                                        <List.Item
-                                            onPress={() => {
-                                                handleGameSearch(game)
-                                            }}
-                                            title={game.name}
-                                            description={() => (
-                                                <View style={{ paddingTop: 5 }}>
-                                                    <PlatformTags platforms={game.platforms || []} disabled />
-                                                    <View style={{ flexDirection: 'row' }}>
-                                                        {game.released && (
-                                                            <Chip mode="outlined">
-                                                                {getText('released')} :{' '}
-                                                                {new Date(game.released).getFullYear()}
-                                                            </Chip>
-                                                        )}
-                                                    </View>
-                                                </View>
-                                            )}
-                                            left={() => <GameImageTile game={game} />}
-                                        />
-                                        <Divider />
-                                    </View>
-                                ))}
-                            </ScrollView>
+                    <FlatList
+                        keyboardShouldPersistTaps={'handled'}
+                        data={games}
+                        keyExtractor={item => item.slug}
+                        renderItem={({ item: game }) => (
+                            <View>
+                                <List.Item
+                                    onPress={() => {
+                                        handleGameSearch(game)
+                                    }}
+                                    title={game.name}
+                                    description={() => (
+                                        <View style={{ paddingTop: 5 }}>
+                                            <PlatformTags platforms={game.platforms || []} disabled />
+                                            <View style={{ flexDirection: 'row' }}>
+                                                {game.released && (
+                                                    <Chip mode="outlined">
+                                                        {getText('released')} : {new Date(game.released).getFullYear()}
+                                                    </Chip>
+                                                )}
+                                            </View>
+                                        </View>
+                                    )}
+                                    left={() => <GameImageTile game={game} />}
+                                />
+                                <Divider />
+                            </View>
                         )}
-                    </View>
+                    />
                 )}
             </Container>
         </Provider>

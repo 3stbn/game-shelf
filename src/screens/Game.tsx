@@ -122,6 +122,7 @@ const Game = ({ navigation }: { navigation: NavigationStackProp }) => {
         }
 
         await storeGame(game.id.toString(), gameToSave)
+
         const tabRoute = ownership === 'owned' ? status : ownership
         navigation.dispatch(
             StackActions.reset({

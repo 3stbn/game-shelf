@@ -30,7 +30,6 @@ function Home({ navigation }: { navigation: NavigationStackProp }) {
     const tabKey = navigation.getParam('tabKey')
 
     const [games, setGames] = useState<Array<SavedGame>>([])
-    const [showBanner, setShowBanner] = useState(false)
 
     const [platforms, setPlatforms] = useState<Array<Platform>>([])
 
@@ -48,40 +47,60 @@ function Home({ navigation }: { navigation: NavigationStackProp }) {
     }
 
     const [index, setIndex] = useState(0)
-    const [routes] = useState(defaultRoutes)
+    const [routes, setRoutes] = useState(defaultRoutes)
+
+    const [backlogGames, setBacklogGames] = useState<Array<SavedGame>>([])
+    const [inProgressGames, setInProgressGames] = useState<Array<SavedGame>>([])
+    const [playedGames, setPlayedGames] = useState<Array<SavedGame>>([])
+    const [completedGames, setCompletedGames] = useState<Array<SavedGame>>([])
+    const [wishListGames, setWishlistGames] = useState<Array<SavedGame>>([])
+
+    useEffect(() => {
+        const navigationFocusListener = navigation.addListener('didFocus', () => {
+            loadGames()
+        })
+        return () => navigationFocusListener.remove()
+    }, [])
+
+    useEffect(() => {
+        setBacklogGames(filteredGames.filter(g => g.ownership === 'owned' && g.status === 'backlog'))
+        setInProgressGames(filteredGames.filter(g => g.ownership === 'owned' && g.status === 'inProgress'))
+        setPlayedGames(filteredGames.filter(g => g.ownership === 'owned' && g.status === 'played'))
+        setCompletedGames(filteredGames.filter(g => g.ownership === 'owned' && g.status === 'completed'))
+        setWishlistGames(filteredGames.filter(g => g.ownership === 'wishList'))
+    }, [filteredGames])
+
+    useEffect(() => {
+        setRoutes(
+            defaultRoutes.filter(r => {
+                switch (r.key) {
+                    case 'backlog':
+                        return backlogGames.length > 0
+                    case 'inProgress':
+                        return inProgressGames.length > 0
+                    case 'played':
+                        return playedGames.length > 0
+                    case 'completed':
+                        return completedGames.length > 0
+                    case 'wishList':
+                        return wishListGames.length > 0
+                }
+            })
+        )
+    }, [backlogGames, inProgressGames, playedGames, completedGames, wishListGames])
 
     const renderScene = ({ route }: { route: GameRoute }) => {
         switch (route.key) {
             case 'backlog':
-                return (
-                    <GamesList
-                        games={filteredGames.filter(g => g.ownership === 'owned' && g.status === 'backlog')}
-                        viewType="grid"
-                    />
-                )
+                return <GamesList games={backlogGames} viewType="grid" />
             case 'inProgress':
-                return (
-                    <GamesList
-                        games={filteredGames.filter(g => g.ownership === 'owned' && g.status === 'inProgress')}
-                        viewType="grid"
-                    />
-                )
+                return <GamesList games={inProgressGames} viewType="grid" />
             case 'played':
-                return (
-                    <GamesList
-                        games={filteredGames.filter(g => g.ownership === 'owned' && g.status === 'played')}
-                        viewType="grid"
-                    />
-                )
+                return <GamesList games={playedGames} viewType="grid" />
             case 'completed':
-                return (
-                    <GamesList
-                        games={filteredGames.filter(g => g.ownership === 'owned' && g.status === 'completed')}
-                        viewType="grid"
-                    />
-                )
+                return <GamesList games={completedGames} viewType="grid" />
             case 'wishList':
-                return <GamesList games={filteredGames.filter(g => g.ownership === 'wishList')} viewType="grid" />
+                return <GamesList games={wishListGames} viewType="grid" />
 
             default:
                 return null
@@ -115,9 +134,6 @@ function Home({ navigation }: { navigation: NavigationStackProp }) {
     async function loadGames() {
         const storageGames: Array<SavedGame> = await getGames()
 
-        if (storageGames.length === 0) {
-            setShowBanner(true)
-        }
         const ownedPlatforms = _.uniqBy(
             _.flatten(storageGames.filter(g => g.ownedPlatforms.length > 0).map(g => g.ownedPlatforms)),
             platform => platform && platform.platform.slug
@@ -134,6 +150,10 @@ function Home({ navigation }: { navigation: NavigationStackProp }) {
         setGames(storageGames)
     }
 
+    if (games.length === 0) {
+        return <NoGamesBanner />
+    }
+
     return (
         <View style={{ flex: 1 }}>
             <TabView
@@ -143,14 +163,15 @@ function Home({ navigation }: { navigation: NavigationStackProp }) {
                         <View>
                             <TabBar
                                 {...props}
-                                scrollEnabled
-                                tabStyle={{
+                                style={{
                                     backgroundColor: Colors.white,
                                     borderBottomColor: Colors.deepPurple300,
                                     borderBottomWidth: 1,
                                     borderTopColor: Colors.deepPurple200,
                                     borderTopWidth: 1
                                 }}
+                                scrollEnabled
+                                tabStyle={{ backgroundColor: Colors.white }}
                                 activeColor={Colors.deepPurple600}
                                 inactiveColor={Colors.deepPurple100}
                                 pressColor={Colors.deepPurple200}
@@ -175,34 +196,31 @@ function Home({ navigation }: { navigation: NavigationStackProp }) {
                             />
                         </View>
 
-                        {games.length === 0 && <NoGamesBanner setShowBanner={setShowBanner} showBanner={showBanner} />}
-                        {games.length > 0 && (
-                            <View
-                                style={{
-                                    paddingTop: 15,
-                                    paddingBottom: 15,
-                                    paddingLeft: 15,
-                                    flexDirection: 'row'
-                                }}
-                            >
-                                <PlatformTags
-                                    platforms={platforms}
-                                    horizontal
-                                    selected={selectedPlatForms}
-                                    handleChip={handleSelectedPlatforms}
-                                />
+                        <View
+                            style={{
+                                paddingTop: 15,
+                                paddingBottom: 15,
+                                paddingLeft: 15,
+                                flexDirection: 'row'
+                            }}
+                        >
+                            <PlatformTags
+                                platforms={platforms}
+                                horizontal
+                                selected={selectedPlatForms}
+                                handleChip={handleSelectedPlatforms}
+                            />
 
-                                <IconButton
-                                    icon="magnify"
-                                    color={Colors.deepPurple400}
-                                    size={24}
-                                    style={{ marginTop: -3 }}
-                                    onPress={() => {
-                                        navigation.navigate(getText('searchGame'), { games })
-                                    }}
-                                />
-                            </View>
-                        )}
+                            <IconButton
+                                icon="magnify"
+                                color={Colors.deepPurple400}
+                                size={24}
+                                style={{ marginTop: -3 }}
+                                onPress={() => {
+                                    navigation.navigate(getText('searchGame'), { games })
+                                }}
+                            />
+                        </View>
                     </View>
                 )}
                 navigationState={{ index, routes }}
