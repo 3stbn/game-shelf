@@ -22,7 +22,8 @@ const content: LocalizationContent = {
         update: 'Actualizar',
         save: 'Guardar',
         noSearchResults: 'No hay resultados',
-        newGameName: 'Nombre del juego'
+        newGameName: 'Nombre del juego',
+        noGamesDescription: 'Empieza añadiendo juegos a tu collección'
     },
     en: {
         home: 'Home',
@@ -45,7 +46,8 @@ const content: LocalizationContent = {
         update: 'Update',
         save: 'Save',
         noSearchResults: 'No search results',
-        newGameName: 'Game name'
+        newGameName: 'Game name',
+        noGamesDescription: 'Get started adding some games to your collection'
     }
 }
 

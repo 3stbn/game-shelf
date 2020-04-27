@@ -24,18 +24,10 @@ function NoGamesBanner({
                 },
                 {
                     label: getText('close'),
-                    onPress: () => setShowBanner(true)
+                    onPress: () => setShowBanner(false)
                 }
             ]}
-            icon={({ size }) => (
-                <Image
-                    source={{ uri: 'https://avatars3.githubusercontent.com/u/17571969?s=400&v=4' }}
-                    style={{
-                        width: size,
-                        height: size
-                    }}
-                />
-            )}
+            icon="gamepad"
         >
             {getText('noGamesDescription')}
         </Banner>

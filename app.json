@@ -1,7 +1,7 @@
 {
     "expo": {
-        "name": "videogames-tracker",
-        "slug": "videogames-tracker",
+        "name": "game-shelf",
+        "slug": "game-shelf",
         "platforms": ["ios", "android", "web"],
         "version": "1.0.0",
         "orientation": "portrait",
@@ -9,14 +9,24 @@
         "splash": {
             "image": "./assets/splash.png",
             "resizeMode": "contain",
-            "backgroundColor": "#ffffff"
+            "backgroundColor": "#3B3940"
         },
         "updates": {
             "fallbackToCacheTimeout": 0
         },
         "assetBundlePatterns": ["**/*"],
         "ios": {
-            "supportsTablet": true
+            "supportsTablet": true,
+            "bundleIdentifier": "com.gameshelf.gameshelf",
+            "icon": "./assets/icon.png"
+        },
+        "android": {
+            "package": "com.gameshelf.gameshelf",
+            "icon": "./assets/icon.png",
+            "adaptiveIcon": {
+                "foregroundImage": "./assets/adaptative-icon.png",
+                "backgroundColor": "#3B3940"
+            }
         }
     }
 }
