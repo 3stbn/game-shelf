@@ -64,7 +64,7 @@ function GameCard({
             )}
             {!collapsed && (
                 <Card.Content style={{ paddingLeft: 0, paddingRight: 0 }}>
-                    {game.description_raw && extraInfo && (
+                    {game.description_raw !== '' && extraInfo && (
                         <List.Accordion
                             title={getText('summary')}
                             left={props => <List.Icon {...props} color={Colors.deepPurple300} icon="comment" />}
@@ -90,7 +90,9 @@ function GameCard({
                     {game.genres && game.genres?.length > 0 && extraInfo && (
                         <List.Item
                             style={{ paddingTop: 0, paddingBottom: 0 }}
-                            title={game.genres?.map(g => `${g.name}  |  `)}
+                            title={game.genres?.map((g, idx) =>
+                                idx + 1 === game.genres?.length ? g.name : `${g.name}  |  `
+                            )}
                             left={() => <List.Icon color={Colors.deepPurple300} icon="dice-4" />}
                             titleNumberOfLines={2}
                         />
@@ -124,7 +126,9 @@ function GameCard({
                         {game.genres && game.genres?.length > 0 && extraInfo && (
                             <List.Item
                                 style={{ paddingTop: 0, paddingBottom: 0 }}
-                                title={game.genres?.map(g => `${g.name}  |  `)}
+                                title={game.genres?.map((g, idx) =>
+                                    idx + 1 === game.genres?.length ? g.name : `${g.name}  |  `
+                                )}
                                 left={() => <List.Icon color={Colors.deepPurple300} icon="dice-4" />}
                                 titleNumberOfLines={2}
                             />

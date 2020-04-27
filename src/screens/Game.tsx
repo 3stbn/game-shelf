@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react'
-import { ScrollView, View } from 'react-native'
+import { ScrollView, View, ToastAndroid, Platform } from 'react-native'
 import { SavedGame, GameStatus, PlatformsAccumulator, SelectedPlatform, Ownership, GameRoute } from '../types'
 import { withNavigation, StackActions, NavigationActions } from 'react-navigation'
 import { NavigationStackProp } from 'react-navigation-stack'
@@ -9,17 +10,22 @@ import GameCard from '../components/GameCard'
 import GameStatusSelector from '../components/GameStatusSelector'
 import { getText } from '../utils/locale'
 import PlatformTags from '../components/PlatformTags'
-
 import { arrayCompare } from '../utils/array'
 import GameProgressSlider from '../components/GameProgressSlider'
 import { storeGame, removeGame } from '../utils/localStorage'
 import GameOwnerShipSelector from '../components/GameOwnershipSelector'
 import { filterGameProperties } from '../utils/filterGameProperties'
+import { IGDB_USER_KEY } from '../../.env.json'
+import Loading from '../components/Loading'
 
 const Game = ({ navigation }: { navigation: NavigationStackProp }) => {
-    const game: SavedGame = navigation.getParam('game')
+    const gameParam: SavedGame = navigation.getParam('game')
     const mode: 'storedGame' | 'newGame' = navigation.getParam('mode', 'storedGame')
     const route: GameRoute = navigation.getParam('route')
+
+    const [game, setGame] = useState(gameParam)
+
+    const [loading, setLoading] = useState(false)
 
     const [ownership, setOwnership] = useState<Ownership>(
         mode === 'storedGame' ? game.ownership : route && route.key === 'wishList' ? 'wishList' : 'owned'
@@ -72,6 +78,61 @@ const Game = ({ navigation }: { navigation: NavigationStackProp }) => {
         mode
     ])
 
+    useEffect(() => {
+        if (mode === 'newGame') {
+            loadGame()
+        }
+    }, [])
+
+    async function loadGame() {
+        const detailedGame: SavedGame = await loadGameDetails(gameParam.id.toString())
+        setGame(detailedGame)
+    }
+
+    async function loadGameDetails(id: string) {
+        setLoading(true)
+        const url = `https://api.rawg.io/api/games/${id}`
+        const response = await fetch(url, {
+            headers: {
+                'User-Agent': 'game-backlog-idea'
+            }
+        })
+        const gameApi: SavedGame = await response.json()
+        const coverImgId = await loadGameCover(gameApi)
+
+        setLoading(false)
+        return coverImgId ? { ...gameApi, coverImgId } : gameApi
+    }
+
+    async function loadGameCover(gameRawg: SavedGame) {
+        const gameUrl = `https://api-v3.igdb.com/games`
+        const coverUrl = `https://api-v3.igdb.com/covers`
+        const responseCover = await fetch(gameUrl, {
+            headers: {
+                Accept: 'application/json',
+                'user-key': '905b60bca60c9449509e2bcf51e65e87'
+            },
+            method: 'POST',
+            body: `fields cover; limit 1; where slug = "${gameRawg.slug}";`
+        })
+        const covers = await responseCover.json()
+        if (covers.length === 0 || !covers[0].cover) {
+            return null
+        }
+
+        const coverResponse = await fetch(coverUrl, {
+            headers: {
+                Accept: 'application/json',
+                'user-key': IGDB_USER_KEY
+            },
+            method: 'POST',
+            body: `fields image_id; limit 1; where id = ${covers[0].cover};`
+        })
+        const imageIds = await coverResponse.json()
+
+        return imageIds[0].image_id
+    }
+
     function handleSelectedPlatforms(selected: SelectedPlatform) {
         setSelectedPlatForms({
             ...selectedPlatForms,
@@ -122,14 +183,36 @@ const Game = ({ navigation }: { navigation: NavigationStackProp }) => {
         }
 
         await storeGame(game.id.toString(), gameToSave)
+        if (Platform.OS === 'android') {
+            ToastAndroid.show(getText('gameSaved'), ToastAndroid.SHORT)
+        }
 
-        const tabRoute = ownership === 'owned' ? status : ownership
-        navigation.dispatch(
-            StackActions.reset({
-                index: 0,
-                actions: [NavigationActions.navigate({ routeName: getText('home'), params: { tabKey: tabRoute } })]
-            })
-        )
+        if (mode === 'newGame') {
+            navigation.dispatch(
+                StackActions.reset({
+                    index: 1,
+                    actions: [
+                        NavigationActions.navigate({ routeName: getText('home') }),
+                        NavigationActions.navigate({ routeName: getText('newGame') })
+                    ]
+                })
+            )
+        } else {
+            const tabRoute = ownership === 'owned' ? status : ownership
+
+            navigation.dispatch(
+                StackActions.reset({
+                    index: 1,
+                    actions: [
+                        NavigationActions.navigate({ routeName: getText('home'), params: { tabKey: tabRoute } }),
+                        NavigationActions.navigate({
+                            routeName: getText('game'),
+                            params: { game: gameToSave, mode, route }
+                        })
+                    ]
+                })
+            )
+        }
     }
     let gameCardProps: any = {}
 
@@ -139,6 +222,10 @@ const Game = ({ navigation }: { navigation: NavigationStackProp }) => {
 
     async function deleteGame() {
         await removeGame(game.id.toString())
+        if (Platform.OS === 'android') {
+            ToastAndroid.show(getText('gameRemoved'), ToastAndroid.SHORT)
+        }
+
         const tabRoute = ownership === 'owned' ? status : ownership
         navigation.dispatch(
             StackActions.reset({
@@ -147,6 +234,11 @@ const Game = ({ navigation }: { navigation: NavigationStackProp }) => {
             })
         )
     }
+
+    if (loading) {
+        return <Loading />
+    }
+
     return (
         <ScrollView>
             <Container>

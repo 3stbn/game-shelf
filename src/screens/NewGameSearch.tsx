@@ -1,10 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState } from 'react'
-import { TextInput, List, Provider, Chip, Divider, ActivityIndicator } from 'react-native-paper'
+import React, { useState, useRef } from 'react'
+import { TextInput, List, Provider, Chip, Divider, ActivityIndicator, IconButton, Colors } from 'react-native-paper'
 import Container from '../components/Container'
-import { View } from 'react-native'
+import { View, FlatList } from 'react-native'
 import { Game, GameRoute } from '../types'
-import { IGDB_USER_KEY } from '../../.env.json'
 
 import { NavigationStackProp } from 'react-navigation-stack'
 import { withNavigation } from 'react-navigation'
@@ -12,8 +11,8 @@ import { getText } from '../utils/locale'
 import PlatformTags from '../components/PlatformTags'
 import GameImageTile from '../components/GameImageTile'
 import { retrieveGame } from '../utils/localStorage'
-import Loading from '../components/Loading'
-import { FlatList } from 'react-native-gesture-handler'
+
+import { TextInput as ReactTextInput } from 'react-native'
 
 function NewGame({ navigation }: { navigation: NavigationStackProp }) {
     const route: GameRoute = navigation.getParam('route')
@@ -22,7 +21,8 @@ function NewGame({ navigation }: { navigation: NavigationStackProp }) {
     const [timer, setTimer] = useState(0)
     const [games, setGames] = useState<Array<Game>>([])
     const [loading, setLoading] = useState(false)
-    const [loadingRoute, setLoadingRoute] = useState(false)
+
+    const searchRef = useRef<ReactTextInput>(null)
 
     async function queryGames(query: string) {
         const url = `https://api.rawg.io/api/games?search=${query}`
@@ -56,58 +56,13 @@ function NewGame({ navigation }: { navigation: NavigationStackProp }) {
         )
     }
 
-    async function loadGameDetails(id: string) {
-        setLoadingRoute(true)
-        const url = `https://api.rawg.io/api/games/${id}`
-        const response = await fetch(url, {
-            headers: {
-                'User-Agent': 'game-backlog-idea'
-            }
-        })
-        const gameApi: Game = await response.json()
-        const coverImgId = await loadGameCover(gameApi)
-
-        setLoadingRoute(false)
-        return coverImgId ? { ...gameApi, coverImgId } : gameApi
-    }
-
-    async function loadGameCover(gameRawg: Game) {
-        const gameUrl = `https://api-v3.igdb.com/games`
-        const coverUrl = `https://api-v3.igdb.com/covers`
-        const responseCover = await fetch(gameUrl, {
-            headers: {
-                Accept: 'application/json',
-                'user-key': '905b60bca60c9449509e2bcf51e65e87'
-            },
-            method: 'POST',
-            body: `fields cover; limit 1; where slug = "${gameRawg.slug}";`
-        })
-        const covers = await responseCover.json()
-        if (covers.length === 0 || !covers[0].cover) {
-            return null
-        }
-
-        const coverResponse = await fetch(coverUrl, {
-            headers: {
-                Accept: 'application/json',
-                'user-key': IGDB_USER_KEY
-            },
-            method: 'POST',
-            body: `fields image_id; limit 1; where id = ${covers[0].cover};`
-        })
-        const imageIds = await coverResponse.json()
-
-        return imageIds[0].image_id
-    }
-
     async function handleGameSearch(selectedGame: Game) {
         const storageGame = await retrieveGame(selectedGame.id.toString())
 
         if (storageGame) {
             navigation.navigate(getText('game'), { game: storageGame, mode: 'storedGame', route })
         } else {
-            const detailedGame: Game = await loadGameDetails(selectedGame.id.toString())
-            navigation.navigate(getText('game'), { game: detailedGame, mode: 'newGame', route })
+            navigation.navigate(getText('game'), { game: selectedGame, mode: 'newGame', route })
         }
     }
 
@@ -121,46 +76,50 @@ function NewGame({ navigation }: { navigation: NavigationStackProp }) {
                         value={search}
                         onChangeText={handleSearch}
                         autoFocus
-                        disabled={loadingRoute}
+                        ref={searchRef}
                     />
-
                     {loading && (
-                        <ActivityIndicator style={{ marginLeft: -35, position: 'absolute', right: 13, top: 22 }} />
+                        <ActivityIndicator style={{ marginLeft: -35, position: 'absolute', right: 15, top: 22 }} />
+                    )}
+                    {search !== '' && !loading && (
+                        <IconButton
+                            style={{ position: 'absolute', right: 4, top: 12 }}
+                            icon="close"
+                            color={Colors.deepPurple300}
+                            onPress={() => setSearch('')}
+                        />
                     )}
                 </View>
-                {loadingRoute ? (
-                    <Loading />
-                ) : (
-                    <FlatList
-                        keyboardShouldPersistTaps={'handled'}
-                        data={games}
-                        keyExtractor={item => item.slug}
-                        renderItem={({ item: game }) => (
-                            <View>
-                                <List.Item
-                                    onPress={() => {
-                                        handleGameSearch(game)
-                                    }}
-                                    title={game.name}
-                                    description={() => (
-                                        <View style={{ paddingTop: 5 }}>
-                                            <PlatformTags platforms={game.platforms || []} disabled />
-                                            <View style={{ flexDirection: 'row' }}>
-                                                {game.released && (
-                                                    <Chip mode="outlined">
-                                                        {getText('released')} : {new Date(game.released).getFullYear()}
-                                                    </Chip>
-                                                )}
-                                            </View>
+
+                <FlatList
+                    keyboardShouldPersistTaps={'handled'}
+                    data={games}
+                    keyExtractor={item => item.slug}
+                    renderItem={({ item: game }) => (
+                        <View>
+                            <List.Item
+                                onPress={() => {
+                                    handleGameSearch(game)
+                                }}
+                                title={game.name}
+                                description={() => (
+                                    <View style={{ paddingTop: 5 }}>
+                                        <PlatformTags platforms={game.platforms || []} disabled />
+                                        <View style={{ flexDirection: 'row' }}>
+                                            {game.released && (
+                                                <Chip mode="outlined">
+                                                    {getText('released')} : {new Date(game.released).getFullYear()}
+                                                </Chip>
+                                            )}
                                         </View>
-                                    )}
-                                    left={() => <GameImageTile game={game} />}
-                                />
-                                <Divider />
-                            </View>
-                        )}
-                    />
-                )}
+                                    </View>
+                                )}
+                                left={() => <GameImageTile game={game} />}
+                            />
+                            <Divider />
+                        </View>
+                    )}
+                />
             </Container>
         </Provider>
     )

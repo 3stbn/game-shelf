@@ -47,7 +47,9 @@ const content: LocalizationContent = {
         save: 'Save',
         noSearchResults: 'No search results',
         newGameName: 'Game name',
-        noGamesDescription: 'Get started adding some games to your collection'
+        noGamesDescription: 'Get started adding some games to your collection',
+        gameSaved: 'Game Saved',
+        gameRemoved: 'Game Removed'
     }
 }
 
