@@ -9,7 +9,7 @@ const SetListView = ({ listView, setListView }: { listView: GamesListViewType; s
         <IconButton
             style={{ margin: 0 }}
             icon={listView === 'list' ? 'apps' : 'format-list-bulleted'}
-            color={Colors.teal400}
+            color={Colors.deepPurple400}
             size={22}
             onPress={() => setListView(listView === 'list' ? 'grid' : 'list')}
         />

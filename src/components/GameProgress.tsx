@@ -16,10 +16,10 @@ const GameProgress = ({ game, card }: { game: SavedGame; card?: boolean }) => {
                     paddingRight: 25
                 }}
             >
-                <ProgressBar progress={game.progress / 100} color={Colors.teal400} />
+                <ProgressBar progress={game.progress / 100} color={Colors.deepPurple400} />
             </Card>
         ) : (
-            <ProgressBar progress={game.progress / 100} color={Colors.teal400} />
+            <ProgressBar progress={game.progress / 100} color={Colors.deepPurple400} />
         )
     } else {
         return null

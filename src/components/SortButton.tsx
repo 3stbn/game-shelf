@@ -8,7 +8,7 @@ const SetListView = () => {
         <IconButton
             style={{ margin: 0 }}
             icon="sort-descending"
-            color={Colors.teal400}
+            color={Colors.deepPurple400}
             size={22}
             onPress={() => null}
         />

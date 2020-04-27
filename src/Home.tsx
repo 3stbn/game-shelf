@@ -194,7 +194,7 @@ function Home({ navigation }: { navigation: NavigationStackProp }) {
 
                                 <IconButton
                                     icon="magnify"
-                                    color={Colors.teal400}
+                                    color={Colors.deepPurple400}
                                     size={24}
                                     style={{ marginTop: -3 }}
                                     onPress={() => {

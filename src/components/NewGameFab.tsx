@@ -19,7 +19,7 @@ const NewGameFab = ({ navigation, currentRoute }: { navigation: NavigationStackP
 
 const styles = StyleSheet.create({
     fab: {
-        backgroundColor: Colors.teal400,
+        backgroundColor: Colors.deepPurple400,
         color: Colors.white,
         position: 'absolute',
         margin: 16,

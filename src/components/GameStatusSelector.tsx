@@ -19,7 +19,7 @@ export default function GameTypeSelector({
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <RadioButton
                         disabled={disabled}
-                        color={Colors.teal300}
+                        color={Colors.deepPurple300}
                         value="backlog"
                         status={status === 'backlog' ? 'checked' : 'unchecked'}
                         onPress={() => {
@@ -34,7 +34,7 @@ export default function GameTypeSelector({
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <RadioButton
                         disabled={disabled}
-                        color={Colors.teal300}
+                        color={Colors.deepPurple300}
                         value="inProgress"
                         status={status === 'inProgress' ? 'checked' : 'unchecked'}
                         onPress={() => {
@@ -49,7 +49,7 @@ export default function GameTypeSelector({
                     <RadioButton
                         disabled={disabled}
                         value="completed"
-                        color={Colors.teal300}
+                        color={Colors.deepPurple300}
                         status={status === 'completed' ? 'checked' : 'unchecked'}
                         onPress={() => {
                             setStatus('completed')
@@ -63,7 +63,7 @@ export default function GameTypeSelector({
                     <RadioButton
                         disabled={disabled}
                         value="played"
-                        color={Colors.teal300}
+                        color={Colors.deepPurple300}
                         status={status === 'played' ? 'checked' : 'unchecked'}
                         onPress={() => {
                             setStatus('played')

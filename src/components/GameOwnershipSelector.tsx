@@ -18,7 +18,7 @@ export default function GameTypeSelector({
                     <RadioButton
                         value="owned"
                         status={ownership === 'owned' ? 'checked' : 'unchecked'}
-                        color={Colors.teal300}
+                        color={Colors.deepPurple300}
                         onPress={() => {
                             setOwnership('owned')
                         }}

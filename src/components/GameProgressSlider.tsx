@@ -29,8 +29,9 @@ const GameProgressSlider = ({
                 minimumValue={0}
                 maximumValue={100}
                 value={progress}
-                minimumTrackTintColor={Colors.teal500}
-                maximumTrackTintColor={Colors.teal100}
+                minimumTrackTintColor={Colors.deepPurple500}
+                maximumTrackTintColor={Colors.deepPurple100}
+                thumbTintColor={Colors.deepPurple500}
                 onSlidingComplete={setProgress}
             />
             <Caption>{progress.toFixed(0)} %</Caption>

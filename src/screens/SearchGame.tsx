@@ -33,7 +33,7 @@ const SearchGame = ({ navigation }: { navigation: NavigationStackProp }) => {
 
                 <IconButton
                     icon={'close'}
-                    color={Colors.teal400}
+                    color={Colors.deepPurple400}
                     size={24}
                     style={{ marginTop: 10 }}
                     onPress={() => {
