@@ -1,9 +1,11 @@
 {
     "expo": {
-        "name": "game-shelf",
+        "name": "Game shelf",
         "slug": "game-shelf",
         "platforms": ["ios", "android", "web"],
         "version": "1.0.0",
+        "sdkVersion": "37.0.0",
+        "privacy": "unlisted",
         "orientation": "portrait",
         "icon": "./assets/icon.png",
         "splash": {
@@ -12,21 +14,23 @@
             "backgroundColor": "#3B3940"
         },
         "updates": {
-            "fallbackToCacheTimeout": 0
+            "fallbackToCacheTimeout": 1000
         },
         "assetBundlePatterns": ["**/*"],
         "ios": {
             "supportsTablet": true,
-            "bundleIdentifier": "com.gameshelf.gameshelf",
+            "bundleIdentifier": "com.gameshelfcollection.gameshelfcollection",
             "icon": "./assets/icon.png"
         },
         "android": {
-            "package": "com.gameshelf.gameshelf",
+            "versionCode": 1,
+            "package": "com.gameshelfcollection.gameshelfcollection",
             "icon": "./assets/icon.png",
             "adaptiveIcon": {
                 "foregroundImage": "./assets/adaptative-icon.png",
                 "backgroundColor": "#3B3940"
-            }
+            },
+            "permissions": []
         }
     }
 }
