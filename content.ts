@@ -23,7 +23,9 @@ const content: LocalizationContent = {
         save: 'Guardar',
         noSearchResults: 'No hay resultados',
         newGameName: 'Nombre del juego',
-        noGamesDescription: 'Empieza añadiendo juegos a tu collección'
+        noGamesDescription: 'Empieza añadiendo juegos a tu collección',
+        gameSaved: 'Juego guardado',
+        gameRemoved: 'Juego eliminado'
     },
     en: {
         home: 'Home',

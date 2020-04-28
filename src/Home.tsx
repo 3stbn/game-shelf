@@ -29,6 +29,7 @@ const defaultRoutes: Array<GameRoute> = [
 function Home({ navigation }: { navigation: NavigationStackProp }) {
     const tabKey = navigation.getParam('tabKey')
 
+    //TODO.. fix loading issue
     const [games, setGames] = useState<Array<SavedGame>>([])
 
     const [platforms, setPlatforms] = useState<Array<Platform>>([])

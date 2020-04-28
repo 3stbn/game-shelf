@@ -187,19 +187,19 @@ const Game = ({ navigation }: { navigation: NavigationStackProp }) => {
             ToastAndroid.show(getText('gameSaved'), ToastAndroid.SHORT)
         }
 
+        const tabRoute = ownership === 'owned' ? status : ownership
+
         if (mode === 'newGame') {
             navigation.dispatch(
                 StackActions.reset({
                     index: 1,
                     actions: [
-                        NavigationActions.navigate({ routeName: getText('home') }),
+                        NavigationActions.navigate({ routeName: getText('home'), params: { tabKey: tabRoute, route } }),
                         NavigationActions.navigate({ routeName: getText('newGame') })
                     ]
                 })
             )
         } else {
-            const tabRoute = ownership === 'owned' ? status : ownership
-
             navigation.dispatch(
                 StackActions.reset({
                     index: 1,
