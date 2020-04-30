@@ -7,7 +7,7 @@ const content: LocalizationContent = {
         released: 'Lanzamiento',
         game: 'Juego',
         searchGame: 'Buscar Juego',
-        backlog: 'No jugados',
+        backlog: 'No jugado',
         inProgress: 'Jugando',
         played: 'Lo jugué',
         completed: 'Completado',
@@ -25,7 +25,8 @@ const content: LocalizationContent = {
         newGameName: 'Nombre del juego',
         noGamesDescription: 'Empieza añadiendo juegos a tu collección',
         gameSaved: 'Juego guardado',
-        gameRemoved: 'Juego eliminado'
+        gameRemoved: 'Juego eliminado',
+        welcome: 'Bienvenido'
     },
     en: {
         home: 'Home',
@@ -51,7 +52,8 @@ const content: LocalizationContent = {
         newGameName: 'Game name',
         noGamesDescription: 'Get started adding some games to your collection',
         gameSaved: 'Game Saved',
-        gameRemoved: 'Game Removed'
+        gameRemoved: 'Game Removed',
+        welcome: 'Welcome'
     }
 }
 

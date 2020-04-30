@@ -6,7 +6,7 @@ import NewGameFab from './components/NewGameFab'
 import { getGames } from './utils/localStorage'
 import { SavedGame, GameRoute, Platform, PlatformsAccumulator, SelectedPlatform } from './types'
 import { withNavigation } from 'react-navigation'
-import { NavigationStackProp } from 'react-navigation-stack'
+import { NavigationStackScreenComponent } from 'react-navigation-stack'
 import { TabView, TabBar } from 'react-native-tab-view'
 import { getText } from './utils/locale'
 import GamesList from './components/GamesList'
@@ -26,10 +26,11 @@ const defaultRoutes: Array<GameRoute> = [
     { key: 'wishList', title: getText('wishList') }
 ]
 
-function Home({ navigation }: { navigation: NavigationStackProp }) {
+const Home: NavigationStackScreenComponent = ({ navigation }) => {
     const tabKey = navigation.getParam('tabKey')
 
-    //TODO.. fix loading issue
+    const [loading, setLoading] = useState(true)
+
     const [games, setGames] = useState<Array<SavedGame>>([])
 
     const [platforms, setPlatforms] = useState<Array<Platform>>([])
@@ -149,9 +150,10 @@ function Home({ navigation }: { navigation: NavigationStackProp }) {
         setSelectedPlatForms(defaultSelected)
 
         setGames(storageGames)
+        setLoading(false)
     }
 
-    if (games.length === 0) {
+    if (games.length === 0 && !loading) {
         return <NoGamesBanner />
     }
 
@@ -171,8 +173,14 @@ function Home({ navigation }: { navigation: NavigationStackProp }) {
                                     borderTopColor: Colors.deepPurple200,
                                     borderTopWidth: 1
                                 }}
-                                scrollEnabled
-                                tabStyle={{ backgroundColor: Colors.white }}
+                                getLabelText={({ route }) => route.title}
+                                labelStyle={{ fontSize: 10, textAlign: 'center' }}
+                                tabStyle={{
+                                    backgroundColor: Colors.white,
+                                    padding: 0,
+                                    paddingTop: 5,
+                                    paddingBottom: 5
+                                }}
                                 activeColor={Colors.deepPurple600}
                                 inactiveColor={Colors.deepPurple100}
                                 pressColor={Colors.deepPurple200}
@@ -199,8 +207,8 @@ function Home({ navigation }: { navigation: NavigationStackProp }) {
 
                         <View
                             style={{
-                                paddingTop: 15,
-                                paddingBottom: 15,
+                                paddingTop: 10,
+                                paddingBottom: 5,
                                 paddingLeft: 15,
                                 flexDirection: 'row'
                             }}
