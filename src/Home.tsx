@@ -65,31 +65,35 @@ const Home: NavigationStackScreenComponent = ({ navigation }) => {
     }, [])
 
     useEffect(() => {
-        setBacklogGames(filteredGames.filter(g => g.ownership === 'owned' && g.status === 'backlog'))
-        setInProgressGames(filteredGames.filter(g => g.ownership === 'owned' && g.status === 'inProgress'))
-        setPlayedGames(filteredGames.filter(g => g.ownership === 'owned' && g.status === 'played'))
-        setCompletedGames(filteredGames.filter(g => g.ownership === 'owned' && g.status === 'completed'))
-        setWishlistGames(filteredGames.filter(g => g.ownership === 'wishList'))
-    }, [filteredGames])
+        if (!loading) {
+            setBacklogGames(filteredGames.filter(g => g.ownership === 'owned' && g.status === 'backlog'))
+            setInProgressGames(filteredGames.filter(g => g.ownership === 'owned' && g.status === 'inProgress'))
+            setPlayedGames(filteredGames.filter(g => g.ownership === 'owned' && g.status === 'played'))
+            setCompletedGames(filteredGames.filter(g => g.ownership === 'owned' && g.status === 'completed'))
+            setWishlistGames(filteredGames.filter(g => g.ownership === 'wishList'))
+        }
+    }, [filteredGames, loading])
 
     useEffect(() => {
-        setRoutes(
-            defaultRoutes.filter(r => {
-                switch (r.key) {
-                    case 'backlog':
-                        return backlogGames.length > 0
-                    case 'inProgress':
-                        return inProgressGames.length > 0
-                    case 'played':
-                        return playedGames.length > 0
-                    case 'completed':
-                        return completedGames.length > 0
-                    case 'wishList':
-                        return wishListGames.length > 0
-                }
-            })
-        )
-    }, [backlogGames, inProgressGames, playedGames, completedGames, wishListGames])
+        if (!loading) {
+            setRoutes(
+                defaultRoutes.filter(r => {
+                    switch (r.key) {
+                        case 'backlog':
+                            return backlogGames.length > 0
+                        case 'inProgress':
+                            return inProgressGames.length > 0
+                        case 'played':
+                            return playedGames.length > 0
+                        case 'completed':
+                            return completedGames.length > 0
+                        case 'wishList':
+                            return wishListGames.length > 0
+                    }
+                })
+            )
+        }
+    }, [backlogGames, inProgressGames, playedGames, completedGames, wishListGames, loading])
 
     const renderScene = ({ route }: { route: GameRoute }) => {
         switch (route.key) {
