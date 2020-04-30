@@ -1,11 +1,12 @@
 import * as React from 'react'
-import { Card, Colors } from 'react-native-paper'
-import { Image } from 'react-native'
-
-const LeftContent = () => <Image style={{ width: 40, resizeMode: 'contain' }} source={require('../assets/logo.png')} />
+import { Colors, Title } from 'react-native-paper'
+import { Image, View } from 'react-native'
 
 const LogoTitle = ({ title }: { title: string }) => (
-    <Card.Title title={title} titleStyle={{ color: Colors.grey700 }} left={LeftContent} />
+    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+        <Image style={{ width: 40, resizeMode: 'contain' }} source={require('../assets/logo.png')} />
+        <Title style={{ color: Colors.grey700, marginLeft: 10 }}>{title}</Title>
+    </View>
 )
 
 export default LogoTitle

@@ -13,5 +13,7 @@ web-report/
 # macOS
 .DS_Store
 
-.env.json
+app.json
+
+config/.env.json
 

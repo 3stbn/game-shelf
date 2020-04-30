@@ -31,6 +31,9 @@
                 "backgroundColor": "#3B3940"
             },
             "permissions": []
+        },
+        "extra": {
+            "IGDB_USER_KEY": ""
         }
     }
 }

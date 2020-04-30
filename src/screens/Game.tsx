@@ -15,8 +15,10 @@ import GameProgressSlider from '../components/GameProgressSlider'
 import { storeGame, removeGame } from '../utils/localStorage'
 import GameOwnerShipSelector from '../components/GameOwnershipSelector'
 import { filterGameProperties } from '../utils/filterGameProperties'
-import { IGDB_USER_KEY } from '../../.env.json'
+import Constants from 'expo-constants'
 import Loading from '../components/Loading'
+
+const IGDB_USER_KEY = Constants.manifest.extra.IGDB_USER_KEY
 
 const Game = ({ navigation }: { navigation: NavigationStackProp }) => {
     const gameParam: SavedGame = navigation.getParam('game')
