@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useRef } from 'react'
 import { TextInput, List, Provider, Chip, Divider, ActivityIndicator, IconButton, Colors } from 'react-native-paper'
 import Container from '../components/Container'
