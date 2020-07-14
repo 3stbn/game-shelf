@@ -26,7 +26,8 @@ const content: LocalizationContent = {
         noGamesDescription: 'Empieza añadiendo juegos a tu collección',
         gameSaved: 'Juego guardado',
         gameRemoved: 'Juego eliminado',
-        welcome: 'Bienvenido'
+        welcome: 'Bienvenido',
+        platformsDescription: 'Selecciona las plataformas que tienes'
     },
     en: {
         home: 'Home',
@@ -53,7 +54,8 @@ const content: LocalizationContent = {
         noGamesDescription: 'Get started adding some games to your collection',
         gameSaved: 'Game Saved',
         gameRemoved: 'Game Removed',
-        welcome: 'Welcome'
+        welcome: 'Welcome',
+        platformsDescription: 'Please select the platforms that you own'
     }
 }
 

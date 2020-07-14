@@ -16,6 +16,7 @@ const PlatformTags = ({
     handleChip?: Function
     horizontal?: boolean
 }) => {
+    const selectedArray = selected && Object.values(selected).filter(p => p.selected)
     return (
         <ScrollView horizontal={horizontal} showsHorizontalScrollIndicator={false}>
             {platforms && (
@@ -26,7 +27,13 @@ const PlatformTags = ({
                             key={platform.id}
                             selected={selected && selected[platform.slug] ? selected[platform.slug].selected : false}
                             onPress={() => (handleChip && selected ? handleChip(selected[platform.slug]) : null)}
-                            disabled={disabled}
+                            disabled={
+                                disabled ||
+                                (selected &&
+                                    selectedArray &&
+                                    selectedArray.length === 1 &&
+                                    selectedArray[0].slug === platform.slug)
+                            }
                             style={{ height: 30 }}
                         >
                             <Caption>{platform.name}</Caption>

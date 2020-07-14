@@ -5,7 +5,7 @@ import { SavedGame, GameStatus, PlatformsAccumulator, SelectedPlatform, Ownershi
 import { withNavigation, StackActions, NavigationActions } from 'react-navigation'
 import { NavigationStackProp } from 'react-navigation-stack'
 import Container from '../components/Container'
-import { Card, Divider, Button, Colors } from 'react-native-paper'
+import { Card, Divider, Button, Colors, Caption } from 'react-native-paper'
 import GameCard from '../components/GameCard'
 import GameStatusSelector from '../components/GameStatusSelector'
 import { getText } from '../utils/locale'
@@ -40,13 +40,13 @@ const Game = ({ navigation }: { navigation: NavigationStackProp }) => {
 
     const accumulator: PlatformsAccumulator = {}
     const defaultSelected = game.platforms
-        ? game.platforms.reduce((obj, acc) => {
-              const owned = game.ownedPlatforms && game.ownedPlatforms.find(g => g.platform.slug === acc.platform.slug)
-              obj[acc.platform.slug] = owned
+        ? game.platforms.reduce((obj, curr, idx) => {
+              const owned = game.ownedPlatforms && game.ownedPlatforms.find(g => g.platform.slug === curr.platform.slug)
+              obj[curr.platform.slug] = owned
                   ? { ...owned.platform, selected: true }
-                  : game.platforms && game.platforms.length === 1
-                  ? { ...acc.platform, selected: true }
-                  : { ...acc.platform, selected: false }
+                  : mode === 'newGame' && game.platforms && game.platforms.length > 0 && idx === 0
+                  ? { ...curr.platform, selected: true }
+                  : { ...curr.platform, selected: false }
               return obj
           }, accumulator)
         : {}
@@ -255,6 +255,9 @@ const Game = ({ navigation }: { navigation: NavigationStackProp }) => {
                     {ownership === 'owned' && (
                         <View>
                             <View style={{ marginBottom: 10 }}>
+                                {mode === 'newGame' && (
+                                    <Caption style={{ marginLeft: 8 }}>{getText('platformsDescription')}</Caption>
+                                )}
                                 <PlatformTags
                                     platforms={game.platforms || []}
                                     selected={selectedPlatForms}
