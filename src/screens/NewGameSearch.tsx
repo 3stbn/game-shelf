@@ -82,7 +82,7 @@ function NewGame({ navigation }: { navigation: NavigationStackProp }) {
                     )}
                     {search !== '' && !loading && (
                         <IconButton
-                            style={{ position: 'absolute', right: 4, top: 12 }}
+                            style={{ position: 'absolute', right: 4, top: 12, zIndex: 99 }}
                             icon="close"
                             color={Colors.deepPurple300}
                             onPress={() => setSearch('')}

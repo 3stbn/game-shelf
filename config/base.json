@@ -3,7 +3,7 @@
         "name": "Game shelf",
         "slug": "game-shelf",
         "platforms": ["ios", "android", "web"],
-        "version": "1.0.0",
+        "version": "1.0.1",
         "sdkVersion": "37.0.0",
         "privacy": "unlisted",
         "orientation": "portrait",
@@ -23,7 +23,7 @@
             "icon": "./assets/icon.png"
         },
         "android": {
-            "versionCode": 2,
+            "versionCode": 3,
             "package": "com.gameshelfcollection.gameshelfcollection",
             "icon": "./assets/icon.png",
             "adaptiveIcon": {
