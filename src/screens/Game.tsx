@@ -17,8 +17,10 @@ import GameOwnerShipSelector from '../components/GameOwnershipSelector'
 import { filterGameProperties } from '../utils/filterGameProperties'
 import Constants from 'expo-constants'
 import Loading from '../components/Loading'
+import _ from 'lodash'
 
 const IGDB_USER_KEY = Constants.manifest.extra.IGDB_USER_KEY
+const RAWG_KEY = Constants.manifest.extra.RAWG_KEY
 
 const Game = ({ navigation }: { navigation: NavigationStackProp }) => {
     const gameParam: SavedGame = navigation.getParam('game')
@@ -60,7 +62,7 @@ const Game = ({ navigation }: { navigation: NavigationStackProp }) => {
         const ownedPlatforms = game.ownedPlatforms ? game.ownedPlatforms.map(p => p.platform.slug) : []
         const hasEqualPlatforms = arrayCompare(currSelectedPlatforms, ownedPlatforms)
         const hasEqualStatus = game.status === status || !game.status
-        const hasEqualProgress = game.progress === progress || !game.progress
+        const hasEqualProgress = game.progress === progress || _.isNil(game.progress)
         const hasEqualOwnership = game.ownership === ownership
 
         const itCanUpdate =
@@ -93,19 +95,16 @@ const Game = ({ navigation }: { navigation: NavigationStackProp }) => {
 
     async function loadGameDetails(id: string) {
         setLoading(true)
-        const url = `https://api.rawg.io/api/games/${id}`
-        const response = await fetch(url, {
-            headers: {
-                'User-Agent': 'game-backlog-idea'
-            }
-        })
+        const url = `https://api.rawg.io/api/games/${id}?key=${RAWG_KEY}`
+        const response = await fetch(url)
         const gameApi: SavedGame = await response.json()
-        const coverImgId = await loadGameCover(gameApi)
 
         setLoading(false)
-        return coverImgId ? { ...gameApi, coverImgId } : gameApi
+        return gameApi
     }
 
+    // Disabling igdb call as auth method changed
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     async function loadGameCover(gameRawg: SavedGame) {
         const gameUrl = `https://api-v3.igdb.com/games`
         const coverUrl = `https://api-v3.igdb.com/covers`
@@ -262,7 +261,7 @@ const Game = ({ navigation }: { navigation: NavigationStackProp }) => {
                                     platforms={game.platforms || []}
                                     selected={selectedPlatForms}
                                     handleChip={handleSelectedPlatforms}
-                                    disabled={game.platforms ? game.platforms.length === 1 : false}
+                                    disabled={(game.platforms && game.platforms.length === 1) || null}
                                 />
                             </View>
                             <View style={{ marginBottom: 10 }}>

@@ -221,6 +221,7 @@ const Home: NavigationStackScreenComponent = ({ navigation }) => {
                                 platforms={platforms}
                                 horizontal
                                 selected={selectedPlatForms}
+                                disabled={false}
                                 handleChip={handleSelectedPlatforms}
                             />
 

@@ -3,15 +3,15 @@ import { TextInput, List, Provider, Chip, Divider, ActivityIndicator, IconButton
 import Container from '../components/Container'
 import { View, FlatList } from 'react-native'
 import { Game, GameRoute } from '../types'
-
 import { NavigationStackProp } from 'react-navigation-stack'
 import { withNavigation } from 'react-navigation'
 import { getText } from '../utils/locale'
 import PlatformTags from '../components/PlatformTags'
 import GameImageTile from '../components/GameImageTile'
 import { retrieveGame } from '../utils/localStorage'
-
 import { TextInput as ReactTextInput } from 'react-native'
+import Constants from 'expo-constants'
+const RAWG_KEY = Constants.manifest.extra.RAWG_KEY
 
 function NewGame({ navigation }: { navigation: NavigationStackProp }) {
     const route: GameRoute = navigation.getParam('route')
@@ -24,12 +24,9 @@ function NewGame({ navigation }: { navigation: NavigationStackProp }) {
     const searchRef = useRef<ReactTextInput>(null)
 
     async function queryGames(query: string) {
-        const url = `https://api.rawg.io/api/games?search=${query}`
-        const response = await fetch(url, {
-            headers: {
-                'User-Agent': 'game-backlog-idea'
-            }
-        })
+        const url = `https://api.rawg.io/api/games?search=${query}&key=${RAWG_KEY}`
+
+        const response = await fetch(url)
 
         const { results: gamesApi } = await response.json()
         setLoading(false)

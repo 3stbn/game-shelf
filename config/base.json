@@ -33,7 +33,8 @@
             "permissions": []
         },
         "extra": {
-            "IGDB_USER_KEY": ""
+            "IGDB_USER_KEY": "",
+            "RAWG_KEY": ""
         }
     }
 }

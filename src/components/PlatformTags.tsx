@@ -2,6 +2,7 @@ import React from 'react'
 import { ScrollView, View } from 'react-native'
 import { PlatformsAccumulator, Platform } from '../types'
 import { Chip, Caption } from 'react-native-paper'
+import _ from 'lodash'
 
 const PlatformTags = ({
     platforms,
@@ -11,7 +12,7 @@ const PlatformTags = ({
     horizontal
 }: {
     platforms?: Array<Platform>
-    disabled?: boolean
+    disabled?: boolean | null
     selected?: PlatformsAccumulator
     handleChip?: Function
     horizontal?: boolean
@@ -28,11 +29,12 @@ const PlatformTags = ({
                             selected={selected && selected[platform.slug] ? selected[platform.slug].selected : false}
                             onPress={() => (handleChip && selected ? handleChip(selected[platform.slug]) : null)}
                             disabled={
-                                disabled ||
-                                (selected &&
-                                    selectedArray &&
-                                    selectedArray.length === 1 &&
-                                    selectedArray[0].slug === platform.slug)
+                                !_.isNil(disabled)
+                                    ? disabled
+                                    : selected &&
+                                      selectedArray &&
+                                      selectedArray.length === 1 &&
+                                      selectedArray[0].slug === platform.slug
                             }
                             style={{ height: 30 }}
                         >
