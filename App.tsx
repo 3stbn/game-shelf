@@ -8,7 +8,7 @@ import NewGame from './src/screens/NewGameSearch'
 import Game from './src/screens/Game'
 import SearchGame from './src/screens/SearchGame'
 import LogoTitle from './src/components/LogoTitle'
-
+import { Provider as PaperProvider } from 'react-native-paper'
 const AppNavigator = createStackNavigator({
     [getText('home')]: {
         screen: Home,
@@ -36,4 +36,14 @@ const AppNavigator = createStackNavigator({
     }
 })
 
-export default createAppContainer(AppNavigator)
+const AppContainer = createAppContainer(AppNavigator)
+
+const App = () => {
+    return (
+        <PaperProvider>
+            <AppContainer />
+        </PaperProvider>
+    )
+}
+
+export default App
