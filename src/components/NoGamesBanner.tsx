@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Button, Title, Subheading, Divider } from 'react-native-paper'
+import { Button, Title, Subheading, Divider, MD2Colors as Colors } from 'react-native-paper'
 import { getText } from '../utils/locale'
 import { withNavigation } from 'react-navigation'
 import { NavigationStackProp } from 'react-navigation-stack'
@@ -28,8 +28,8 @@ function NoGamesBanner({ navigation }: { navigation: NavigationStackProp }) {
 
       <Title
         style={{
-          marginTop: 20
-          //color: Colors.grey800
+          marginTop: 20,
+          color: Colors.grey800
         }}
       >
         {getText('welcome')} !
@@ -39,7 +39,7 @@ function NoGamesBanner({ navigation }: { navigation: NavigationStackProp }) {
       <Subheading
         style={{
           textAlign: 'center',
-          //   color: Colors.grey600,
+          color: Colors.grey600,
           padding: 10,
           width: 250
         }}

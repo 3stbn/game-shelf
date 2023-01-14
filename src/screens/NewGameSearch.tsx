@@ -1,16 +1,25 @@
-import React, { useState, useRef } from 'react'
-import { TextInput, List, Provider, Chip, Divider, ActivityIndicator, IconButton } from 'react-native-paper'
-import Container from '../components/Container'
-import { View, FlatList } from 'react-native'
-import { Game, GameRoute } from '../types'
-import { NavigationStackProp } from 'react-navigation-stack'
-import { withNavigation } from 'react-navigation'
-import { getText } from '../utils/locale'
-import PlatformTags from '../components/PlatformTags'
-import GameImageTile from '../components/GameImageTile'
-import { retrieveGame } from '../utils/localStorage'
-import { TextInput as ReactTextInput } from 'react-native'
 import Constants from 'expo-constants'
+import React, { useRef, useState } from 'react'
+import { FlatList, TextInput as ReactTextInput, View } from 'react-native'
+import {
+  ActivityIndicator,
+  Chip,
+  Divider,
+  IconButton,
+  List,
+  MD2Colors as Colors,
+  Provider,
+  TextInput
+} from 'react-native-paper'
+import { withNavigation } from 'react-navigation'
+import { NavigationStackProp } from 'react-navigation-stack'
+import Container from '../components/Container'
+import GameImageTile from '../components/GameImageTile'
+import PlatformTags from '../components/PlatformTags'
+import { Game, GameRoute } from '../types'
+import { getText } from '../utils/locale'
+import { retrieveGame } from '../utils/localStorage'
+
 const RAWG_KEY = Constants?.manifest?.extra?.RAWG_KEY
 
 function NewGame({ navigation }: { navigation: NavigationStackProp }) {
@@ -79,7 +88,7 @@ function NewGame({ navigation }: { navigation: NavigationStackProp }) {
             <IconButton
               style={{ position: 'absolute', right: 4, top: 12, zIndex: 99 }}
               icon="close"
-              // iconColor={Colors.deepPurple300}
+              iconColor={Colors.deepPurple300}
               onPress={() => setSearch('')}
             />
           )}

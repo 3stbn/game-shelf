@@ -1,13 +1,13 @@
 import React, { ReactNode } from 'react'
 
-import { Card, List, useTheme } from 'react-native-paper'
+import { Card, List } from 'react-native-paper'
 
+import { MD2Colors as Colors } from 'react-native-paper'
+import { withNavigation } from 'react-navigation'
+import { NavigationStackProp } from 'react-navigation-stack'
 import { SavedGame } from '../types'
 import { getText } from '../utils/locale'
 import { truncate } from '../utils/string'
-import { withNavigation } from 'react-navigation'
-import { NavigationStackProp } from 'react-navigation-stack'
-
 import GameImageTile from './GameImageTile'
 import GameProgress from './GameProgress'
 
@@ -32,10 +32,6 @@ function GameCard({
   elevation?: number
   showProgress?: boolean
 }) {
-  const theme = useTheme()
-
-  const iconColor = theme.colors.primary
-
   const cardProps: any = {}
 
   if (pressable) {
@@ -70,7 +66,7 @@ function GameCard({
           {game.description_raw !== '' && extraInfo && (
             <List.Accordion
               title={getText('summary')}
-              left={props => <List.Icon {...props} color={iconColor} icon="comment" />}
+              left={props => <List.Icon {...props} color={Colors.deepPurple300} icon="comment" />}
               style={{ paddingTop: 0, paddingBottom: 0 }}
             >
               <List.Item
@@ -87,14 +83,14 @@ function GameCard({
             <List.Item
               style={{ paddingTop: 0, paddingBottom: 0 }}
               title={`${getText('metaScore')} : ${game.metacritic}`}
-              left={() => <List.Icon color={iconColor} icon="star" />}
+              left={() => <List.Icon color={Colors.deepPurple300} icon="star" />}
             />
           )}
           {game.genres && game.genres?.length > 0 && extraInfo && (
             <List.Item
               style={{ paddingTop: 0, paddingBottom: 0 }}
               title={game.genres?.map((g, idx) => (idx + 1 === game.genres?.length ? g.name : `${g.name}  |  `))}
-              left={() => <List.Icon color={iconColor} icon="dice-4" />}
+              left={() => <List.Icon color={Colors.deepPurple300} icon="dice-4" />}
               titleNumberOfLines={2}
             />
           )}
@@ -104,7 +100,7 @@ function GameCard({
         <Card.Content style={{ paddingLeft: 0, paddingRight: 0 }}>
           <List.Accordion
             title={getText('summary')}
-            left={props => <List.Icon {...props} color={iconColor} icon="comment" />}
+            left={props => <List.Icon {...props} color={Colors.deepPurple300} icon="comment" />}
             style={{ paddingTop: 0, paddingBottom: 0 }}
           >
             {game.description_raw && extraInfo && (
@@ -121,14 +117,14 @@ function GameCard({
               <List.Item
                 style={{ paddingTop: 0, paddingBottom: 0 }}
                 title={`${getText('metaScore')} : ${game.metacritic}`}
-                left={() => <List.Icon color={iconColor} icon="star" />}
+                left={() => <List.Icon color={Colors.deepPurple300} icon="star" />}
               />
             )}
             {game.genres && game.genres?.length > 0 && extraInfo && (
               <List.Item
                 style={{ paddingTop: 0, paddingBottom: 0 }}
                 title={game.genres?.map((g, idx) => (idx + 1 === game.genres?.length ? g.name : `${g.name}  |  `))}
-                left={() => <List.Icon color={iconColor} icon="dice-4" />}
+                left={() => <List.Icon color={Colors.deepPurple300} icon="dice-4" />}
                 titleNumberOfLines={2}
               />
             )}

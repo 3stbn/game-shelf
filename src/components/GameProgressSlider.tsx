@@ -4,7 +4,7 @@ import { Slider, View } from 'react-native'
 import { Caption } from 'react-native-paper'
 import { getText } from '../utils/locale'
 import { Game, SavedGame } from '../types'
-
+import { MD2Colors as Colors } from 'react-native-paper'
 const GameProgressSlider = ({
   progress,
   setProgress,
@@ -29,9 +29,9 @@ const GameProgressSlider = ({
         minimumValue={0}
         maximumValue={100}
         value={progress}
-        // minimumTrackTintColor={Colors.deepPurple500}
-        // maximumTrackTintColor={Colors.deepPurple100}
-        // thumbTintColor={Colors.deepPurple500}
+        minimumTrackTintColor={Colors.deepPurple500}
+        maximumTrackTintColor={Colors.deepPurple100}
+        thumbTintColor={Colors.deepPurple500}
         onSlidingComplete={setProgress}
       />
       <Caption>{progress.toFixed(0)} %</Caption>

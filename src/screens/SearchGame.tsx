@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { View } from 'react-native'
-import { TextInput, IconButton, Subheading } from 'react-native-paper'
+import { IconButton, MD2Colors as Colors, Subheading, TextInput } from 'react-native-paper'
 import { NavigationStackProp } from 'react-navigation-stack'
 import GamesList from '../components/GamesList'
 import { SavedGame } from '../types'
@@ -33,7 +33,7 @@ const SearchGame = ({ navigation }: { navigation: NavigationStackProp }) => {
 
         <IconButton
           icon={'close'}
-          //   iconColor={Colors.deepPurple400}
+          iconColor={Colors.deepPurple400}
           size={24}
           style={{ marginTop: 10 }}
           onPress={() => {

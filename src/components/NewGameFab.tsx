@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet } from 'react-native'
-import { FAB } from 'react-native-paper'
+import { FAB, MD2Colors as Colors } from 'react-native-paper'
 import { withNavigation } from 'react-navigation'
 import { NavigationStackProp } from 'react-navigation-stack'
 import { getText } from '../utils/locale'
@@ -19,8 +19,8 @@ const NewGameFab = ({ navigation, currentRoute }: { navigation: NavigationStackP
 
 const styles = StyleSheet.create({
   fab: {
-    // backgroundColor: Colors.deepPurple400,
-    // color: Colors.white,
+    backgroundColor: Colors.deepPurple400,
+    color: Colors.white,
     position: 'absolute',
     margin: 16,
     right: 0,

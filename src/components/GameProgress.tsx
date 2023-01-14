@@ -1,12 +1,8 @@
 import React from 'react'
-import { ProgressBar, useTheme, Card } from 'react-native-paper'
+import { Card, MD2Colors as Colors, ProgressBar } from 'react-native-paper'
 
 import { SavedGame } from '../types'
-
 const GameProgress = ({ game, card }: { game: SavedGame; card?: boolean }) => {
-  const {
-    colors: { primary: primaryColor }
-  } = useTheme()
   if (game.progress && game.ownership === 'owned' && (game.status === 'inProgress' || game.status === 'played')) {
     return card ? (
       <Card
@@ -20,10 +16,10 @@ const GameProgress = ({ game, card }: { game: SavedGame; card?: boolean }) => {
           paddingRight: 25
         }}
       >
-        <ProgressBar progress={game.progress / 100} color={primaryColor} />
+        <ProgressBar progress={game.progress / 100} color={Colors.deepPurple400} />
       </Card>
     ) : (
-      <ProgressBar progress={game.progress / 100} color={primaryColor} />
+      <ProgressBar progress={game.progress / 100} color={Colors.deepPurple400} />
     )
   } else {
     return null

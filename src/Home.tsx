@@ -1,20 +1,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react'
 
-import { View, Dimensions } from 'react-native'
-import NewGameFab from './components/NewGameFab'
-import { getGames } from './utils/localStorage'
-import { SavedGame, GameRoute, Platform, PlatformsAccumulator, SelectedPlatform } from './types'
+import _ from 'lodash'
+import { Dimensions, View } from 'react-native'
+import { IconButton, MD2Colors as Colors } from 'react-native-paper'
+import { TabBar, TabView } from 'react-native-tab-view'
 import { withNavigation } from 'react-navigation'
 import { NavigationStackScreenComponent } from 'react-navigation-stack'
-import { TabView, TabBar } from 'react-native-tab-view'
-import { getText } from './utils/locale'
 import GamesList from './components/GamesList'
-import { IconButton, useTheme } from 'react-native-paper'
+import NewGameFab from './components/NewGameFab'
 import NoGamesBanner from './components/NoGamesBanner'
 import PlatformTags from './components/PlatformTags'
-
-import _ from 'lodash'
+import { GameRoute, Platform, PlatformsAccumulator, SavedGame, SelectedPlatform } from './types'
+import { getText } from './utils/locale'
+import { getGames } from './utils/localStorage'
 
 const initialLayout = { width: Dimensions.get('window').width, flex: 1 }
 
@@ -27,10 +26,6 @@ const defaultRoutes: Array<GameRoute> = [
 ]
 
 const Home: NavigationStackScreenComponent = ({ navigation }) => {
-  const theme = useTheme()
-  const whiteColor = theme.colors.background
-  const primaryColor = theme.colors.primary
-  const secondaryColor = theme.colors.secondary
   const tabKey = navigation.getParam('tabKey')
 
   const [loading, setLoading] = useState(true)
@@ -173,23 +168,23 @@ const Home: NavigationStackScreenComponent = ({ navigation }) => {
               <TabBar
                 {...props}
                 style={{
-                  backgroundColor: whiteColor,
-                  borderBottomColor: primaryColor,
+                  backgroundColor: Colors.white,
+                  borderBottomColor: Colors.deepPurple300,
                   borderBottomWidth: 1,
-                  borderTopColor: secondaryColor,
+                  borderTopColor: Colors.deepPurple200,
                   borderTopWidth: 1
                 }}
                 getLabelText={({ route }) => route.title}
                 labelStyle={{ fontSize: 10, textAlign: 'center' }}
                 tabStyle={{
-                  backgroundColor: whiteColor,
+                  backgroundColor: Colors.white,
                   padding: 0,
                   paddingTop: 5,
                   paddingBottom: 5
                 }}
-                activeColor={primaryColor}
-                inactiveColor={primaryColor}
-                pressColor={secondaryColor}
+                activeColor={Colors.deepPurple600}
+                inactiveColor={Colors.deepPurple100}
+                pressColor={Colors.deepPurple200}
                 renderIcon={({ route, color }) => (
                   <IconButton
                     style={{ margin: 0 }}
@@ -229,7 +224,7 @@ const Home: NavigationStackScreenComponent = ({ navigation }) => {
 
               <IconButton
                 icon="magnify"
-                iconColor={primaryColor}
+                iconColor={Colors.deepPurple400}
                 size={24}
                 style={{ marginTop: -3 }}
                 onPress={() => {

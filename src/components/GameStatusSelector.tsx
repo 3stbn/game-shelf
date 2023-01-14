@@ -1,8 +1,8 @@
 import React from 'react'
-import { ScrollView, View, StyleSheet } from 'react-native'
-import { RadioButton, Caption, TouchableRipple, useTheme } from 'react-native-paper'
-import { getText } from '../utils/locale'
+import { ScrollView, StyleSheet, View } from 'react-native'
+import { Caption, MD2Colors as Colors, RadioButton, TouchableRipple } from 'react-native-paper'
 import { GameStatus } from '../types'
+import { getText } from '../utils/locale'
 
 export default function GameTypeSelector({
   status,
@@ -13,16 +13,13 @@ export default function GameTypeSelector({
   setStatus: Function
   disabled?: boolean
 }) {
-  const {
-    colors: { primary: primaryColor }
-  } = useTheme()
   return (
     <ScrollView horizontal showsHorizontalScrollIndicator={false}>
       <TouchableRipple borderless onPress={() => setStatus('backlog')} style={styles.checkbox}>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <RadioButton
             disabled={disabled}
-            color={primaryColor}
+            color={Colors.deepPurple300}
             value="backlog"
             status={status === 'backlog' ? 'checked' : 'unchecked'}
             onPress={() => {
@@ -37,7 +34,7 @@ export default function GameTypeSelector({
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <RadioButton
             disabled={disabled}
-            color={primaryColor}
+            color={Colors.deepPurple300}
             value="inProgress"
             status={status === 'inProgress' ? 'checked' : 'unchecked'}
             onPress={() => {
@@ -52,7 +49,7 @@ export default function GameTypeSelector({
           <RadioButton
             disabled={disabled}
             value="completed"
-            color={primaryColor}
+            color={Colors.deepPurple300}
             status={status === 'completed' ? 'checked' : 'unchecked'}
             onPress={() => {
               setStatus('completed')
@@ -66,7 +63,7 @@ export default function GameTypeSelector({
           <RadioButton
             disabled={disabled}
             value="played"
-            color={primaryColor}
+            color={Colors.deepPurple300}
             status={status === 'played' ? 'checked' : 'unchecked'}
             onPress={() => {
               setStatus('played')
@@ -84,6 +81,7 @@ const styles = StyleSheet.create({
     flex: 1,
     borderRadius: 25,
     paddingRight: 8,
+    borderColor: Colors.grey100,
     borderWidth: 1,
     marginLeft: 3
   }

@@ -1,9 +1,8 @@
 import React from 'react'
 import { View } from 'react-native'
-import { RadioButton, Caption, TouchableRipple, useTheme } from 'react-native-paper'
-import { getText } from '../utils/locale'
+import { Caption, MD2Colors as Colors, RadioButton, TouchableRipple } from 'react-native-paper'
 import { Ownership } from '../types'
-
+import { getText } from '../utils/locale'
 export default function GameTypeSelector({
   ownership,
   setOwnership
@@ -11,8 +10,6 @@ export default function GameTypeSelector({
   ownership: Ownership
   setOwnership: Function
 }) {
-  const theme = useTheme()
-  const primaryColor = theme.colors.primary
   return (
     <View style={{ flexDirection: 'row' }}>
       <TouchableRipple onPress={() => setOwnership('owned')} style={{ flex: 1, borderRadius: 25 }}>
@@ -20,7 +17,7 @@ export default function GameTypeSelector({
           <RadioButton
             value="owned"
             status={ownership === 'owned' ? 'checked' : 'unchecked'}
-            color={primaryColor}
+            color={Colors.deepPurple300}
             onPress={() => {
               setOwnership('owned')
             }}

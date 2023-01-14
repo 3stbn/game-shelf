@@ -1,30 +1,28 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect } from 'react'
-import { ScrollView, View, ToastAndroid, Platform } from 'react-native'
-import { SavedGame, GameStatus, PlatformsAccumulator, SelectedPlatform, Ownership, GameRoute } from '../types'
-import { withNavigation, StackActions, NavigationActions } from 'react-navigation'
+import Constants from 'expo-constants'
+import _ from 'lodash'
+import React, { useEffect, useState } from 'react'
+import { Platform, ScrollView, ToastAndroid, View } from 'react-native'
+import { Button, Caption, Card, Divider, MD2Colors as Colors } from 'react-native-paper'
+import { NavigationActions, StackActions, withNavigation } from 'react-navigation'
 import { NavigationStackProp } from 'react-navigation-stack'
 import Container from '../components/Container'
-import { Card, Divider, Button, Caption, useTheme } from 'react-native-paper'
 import GameCard from '../components/GameCard'
-import GameStatusSelector from '../components/GameStatusSelector'
-import { getText } from '../utils/locale'
-import PlatformTags from '../components/PlatformTags'
-import { arrayCompare } from '../utils/array'
-import GameProgressSlider from '../components/GameProgressSlider'
-import { storeGame, removeGame } from '../utils/localStorage'
 import GameOwnerShipSelector from '../components/GameOwnershipSelector'
-import { filterGameProperties } from '../utils/filterGameProperties'
-import Constants from 'expo-constants'
+import GameProgressSlider from '../components/GameProgressSlider'
+import GameStatusSelector from '../components/GameStatusSelector'
 import Loading from '../components/Loading'
-import _ from 'lodash'
+import PlatformTags from '../components/PlatformTags'
+import { GameRoute, GameStatus, Ownership, PlatformsAccumulator, SavedGame, SelectedPlatform } from '../types'
+import { arrayCompare } from '../utils/array'
+import { filterGameProperties } from '../utils/filterGameProperties'
+import { getText } from '../utils/locale'
+import { removeGame, storeGame } from '../utils/localStorage'
 
 const IGDB_USER_KEY = Constants?.manifest?.extra?.IGDB_USER_KEY ?? ''
 const RAWG_KEY = Constants?.manifest?.extra?.RAWG_KEY ?? ''
 
 const Game = ({ navigation }: { navigation: NavigationStackProp }) => {
-  const theme = useTheme()
-  const errorColor = theme.colors.error
   const gameParam: SavedGame = navigation.getParam('game')
   const mode: 'storedGame' | 'newGame' = navigation.getParam('mode', 'storedGame')
   const route: GameRoute = navigation.getParam('route')
@@ -277,7 +275,7 @@ const Game = ({ navigation }: { navigation: NavigationStackProp }) => {
           )}
           <View style={{ flexDirection: 'row' }}>
             {mode === 'storedGame' && (
-              <Button mode="outlined" onPress={deleteGame} style={{ flex: 1 }} color={errorColor}>
+              <Button mode="outlined" onPress={deleteGame} style={{ flex: 1 }} color={Colors.red300}>
                 {getText('delete')}
               </Button>
             )}
