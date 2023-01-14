@@ -148,39 +148,25 @@ const Game = ({ navigation }: { navigation: NavigationStackProp }) => {
         platform: { id, name, slug }
       }))
 
-    let gameToSave: SavedGame
+    const gameContent = mode === 'newGame' ? filterGameProperties(game) : game
+
+    let gameToSave: SavedGame = {
+      ...gameContent,
+      ownership,
+      ownedPlatforms: ownership === 'owned' ? ownedPlatforms : [],
+      savedTs: mode === 'newGame' ? now : game.savedTs,
+      updatedTs: now
+    }
 
     if (mode === 'newGame') {
-      const filteredGame = filterGameProperties(game)
-
-      gameToSave = {
-        ...filteredGame,
-        ownership
-      }
       if (game.coverImgId) {
         gameToSave.coverImgId = game.coverImgId
-      }
-    } else {
-      gameToSave = {
-        ...game,
-        ownership
       }
     }
 
     if (ownership === 'owned') {
       gameToSave.status = status
       gameToSave.progress = progress
-      gameToSave.ownedPlatforms = ownedPlatforms
-    }
-    if (ownership === 'wishList') {
-      gameToSave.ownedPlatforms = []
-    }
-
-    if (mode === 'newGame') {
-      gameToSave.savedTs = now
-    }
-    if (mode === 'storedGame') {
-      gameToSave.updatedTs = now
     }
 
     await storeGame(game.id.toString(), gameToSave)

@@ -1,10 +1,10 @@
 import React from 'react'
 
-import { Slider, View } from 'react-native'
-import { Caption } from 'react-native-paper'
-import { getText } from '../utils/locale'
+import Slider from '@react-native-community/slider'
+import { View } from 'react-native'
+import { Caption, MD2Colors as Colors } from 'react-native-paper'
 import { Game, SavedGame } from '../types'
-import { MD2Colors as Colors } from 'react-native-paper'
+import { getText } from '../utils/locale'
 const GameProgressSlider = ({
   progress,
   setProgress,

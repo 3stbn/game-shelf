@@ -135,7 +135,7 @@ const Home: NavigationStackScreenComponent = ({ navigation }) => {
   }, [selectedPlatForms, games])
 
   async function loadGames() {
-    const storageGames: Array<SavedGame> = await getGames()
+    const storageGames = await getGames()
 
     const ownedPlatforms = _.uniqBy(
       _.flatten(storageGames.filter(g => g.ownedPlatforms.length > 0).map(g => g.ownedPlatforms)),

@@ -26,7 +26,7 @@ function NewGame({ navigation }: { navigation: NavigationStackProp }) {
   const route: GameRoute = navigation.getParam('route')
 
   const [search, setSearch] = useState('')
-  const [timer, setTimer] = useState(0)
+  const [timer, setTimer] = useState<NodeJS.Timeout>()
   const [games, setGames] = useState<Array<Game>>([])
   const [loading, setLoading] = useState(false)
 
