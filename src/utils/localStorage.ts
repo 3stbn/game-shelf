@@ -1,4 +1,4 @@
-import { AsyncStorage } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { SavedGame } from '../types'
 
 export const storeGame = async (id: string, game: SavedGame) => {
@@ -17,7 +17,7 @@ export const getGames = async (): Promise<SavedGame[]> => {
   const stores = await AsyncStorage.multiGet(gameKeys)
 
   return stores.map(([, value]) => {
-    const storedGame = JSON.parse(value)
+    const storedGame = JSON.parse(value ?? '')
     return storedGame
   })
 }

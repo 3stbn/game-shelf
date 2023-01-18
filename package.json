@@ -11,6 +11,7 @@
         "lint": "tsc --noEmit && eslint --ext .js,.ts,.tsx ./"
     },
     "dependencies": {
+        "@react-native-async-storage/async-storage": "~1.17.3",
         "@react-native-community/masked-view": "0.1.6",
         "@react-native-community/slider": "4.2.4",
         "expo": "^47.0.0",

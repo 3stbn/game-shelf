@@ -3,6 +3,7 @@ import 'react-native-gesture-handler'
 import { Provider as PaperProvider } from 'react-native-paper'
 import { createAppContainer } from 'react-navigation'
 import { createStackNavigator } from 'react-navigation-stack'
+
 import LogoTitle from './src/components/LogoTitle'
 import Home from './src/Home'
 import Game from './src/screens/Game'
