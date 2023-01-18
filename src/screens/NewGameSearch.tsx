@@ -9,6 +9,7 @@ import {
   List,
   MD2Colors as Colors,
   Provider,
+  Text,
   TextInput
 } from 'react-native-paper'
 import { withNavigation } from 'react-navigation'
@@ -86,7 +87,7 @@ function NewGame({ navigation }: { navigation: NavigationStackProp }) {
           {loading && <ActivityIndicator style={{ marginLeft: -35, position: 'absolute', right: 15, top: 22 }} />}
           {search !== '' && !loading && (
             <IconButton
-              style={{ position: 'absolute', right: 4, top: 12, zIndex: 99 }}
+              style={{ position: 'absolute', right: 4, top: 9, zIndex: 99 }}
               icon="close"
               iconColor={Colors.deepPurple300}
               onPress={() => setSearch('')}
@@ -110,8 +111,15 @@ function NewGame({ navigation }: { navigation: NavigationStackProp }) {
                     <PlatformTags platforms={game.platforms || []} disabled />
                     <View style={{ flexDirection: 'row' }}>
                       {game.released && (
-                        <Chip mode="outlined">
-                          {getText('released')} : {new Date(game.released).getFullYear()}
+                        <Chip style={{ marginTop: 2 }} disabled>
+                          <Text
+                            style={{
+                              color: Colors.deepPurple300,
+                              fontSize: 10
+                            }}
+                          >
+                            {getText('released')} : {new Date(game.released).getFullYear()}
+                          </Text>
                         </Chip>
                       )}
                     </View>

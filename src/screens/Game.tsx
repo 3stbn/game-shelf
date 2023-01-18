@@ -201,11 +201,6 @@ const Game = ({ navigation }: { navigation: NavigationStackProp }) => {
       )
     }
   }
-  let gameCardProps: any = {}
-
-  if (mode === 'newGame') {
-    gameCardProps.collapsed = true
-  }
 
   async function deleteGame() {
     await removeGame(game.id.toString())
@@ -229,14 +224,20 @@ const Game = ({ navigation }: { navigation: NavigationStackProp }) => {
   return (
     <ScrollView>
       <Container>
-        <GameCard game={game} cover extraInfo {...gameCardProps} />
+        <GameCard
+          game={game}
+          cover
+          style={{
+            marginVertical: 10
+          }}
+        />
         <Divider />
-        <Card style={{ padding: 20 }}>
+        <Card style={{ padding: 20, marginVertical: 10 }}>
           <GameOwnerShipSelector ownership={ownership} setOwnership={setOwnership} />
         </Card>
         <Divider />
 
-        <Card style={{ padding: 20 }}>
+        <Card style={{ padding: 20, marginVertical: 10 }}>
           {ownership === 'owned' && (
             <View>
               <View style={{ marginBottom: 10 }}>

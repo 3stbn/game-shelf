@@ -1,30 +1,24 @@
 import React from 'react'
 
-import { Button, Title, Subheading, Divider, MD2Colors as Colors } from 'react-native-paper'
-import { getText } from '../utils/locale'
+import { Dimensions, Image, View } from 'react-native'
+import { Button, Divider, MD2Colors as Colors, Subheading, Title } from 'react-native-paper'
 import { withNavigation } from 'react-navigation'
 import { NavigationStackProp } from 'react-navigation-stack'
-import { Image, View, Dimensions } from 'react-native'
+import { getText } from '../utils/locale'
 
 const WIDTH = Dimensions.get('window').width
 
 function NoGamesBanner({ navigation }: { navigation: NavigationStackProp }) {
-  let styleProps: any = {}
-  if (WIDTH > 360) {
-    styleProps.style = {
-      width: WIDTH,
-      resizeMode: 'contain'
-    }
-  } else {
-    styleProps.style = {
-      width: WIDTH,
-      height: 120,
-      resizeMode: 'contain'
-    }
-  }
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 20 }}>
-      <Image source={require('../assets/starter-bg-video-tracker.png')} {...styleProps} />
+      <Image
+        source={require('../assets/starter-bg-video-tracker.png')}
+        style={{
+          width: WIDTH,
+          resizeMode: 'contain',
+          height: WIDTH > 360 ? undefined : 120
+        }}
+      />
 
       <Title
         style={{
