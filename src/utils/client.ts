@@ -5,9 +5,9 @@ import { getText } from './locale'
 
 export async function makeRequest(pathAndSearch: string) {
   const headers = {
-    'api-key': Constants.manifest?.extra?.API_KEY
+    'api-key': Constants.expoConfig?.extra?.API_KEY
   }
-  const url = `${Constants.manifest?.extra?.WORKER_URL}/${pathAndSearch}`
+  const url = `${Constants.expoConfig?.extra?.WORKER_URL}/${pathAndSearch}`
 
   const response = await fetch(url, { headers })
 

@@ -1,9 +1,5 @@
 import { NativeModules, Platform } from 'react-native'
-import content, { LocalizedKeys } from '../../content'
-
-const supportedLangs = ['en', 'es', 'it'] as const
-
-type SupportedLangs = (typeof supportedLangs)[number]
+import content, { LocalizedKeys, supportedLangs, SupportedLangs } from '../../content'
 
 const deviceLanguage =
   Platform.OS === 'ios'
