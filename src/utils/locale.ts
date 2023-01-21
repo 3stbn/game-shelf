@@ -1,7 +1,7 @@
 import { NativeModules, Platform } from 'react-native'
 import content, { LocalizedKeys } from '../../content'
 
-const supportedLangs = ['en', 'es'] as const
+const supportedLangs = ['en', 'es', 'it'] as const
 
 type SupportedLangs = (typeof supportedLangs)[number]
 

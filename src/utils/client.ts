@@ -1,6 +1,7 @@
 import Constants from 'expo-constants'
 import { Alert } from 'react-native'
 import { Game, SavedGame } from '../types'
+import { getText } from './locale'
 
 export async function makeRequest(pathAndSearch: string) {
   const headers = {
@@ -11,8 +12,7 @@ export async function makeRequest(pathAndSearch: string) {
   const response = await fetch(url, { headers })
 
   if (!response.ok) {
-    const message =
-      response.status === 429 ? 'Daily request limit exceeded please try tomorrow' : 'Something went wrong'
+    const message = response.status === 429 ? getText('rateLimit') : getText('genericError')
     Alert.alert(message)
     return {}
   }

@@ -31,7 +31,9 @@ const engContent = {
   gameSaved: 'Game Saved',
   gameRemoved: 'Game Removed',
   welcome: 'Welcome',
-  platformsDescription: 'Please select the platforms that you own'
+  platformsDescription: 'Please select the platforms that you own',
+  rateLimit: 'Daily request limit exceeded please try tomorrow',
+  genericError: 'Something went wrong'
 }
 
 const esContent: ExtendedContent = {
@@ -61,7 +63,9 @@ const esContent: ExtendedContent = {
   gameRemoved: 'Juego eliminado',
   welcome: 'Bienvenido',
   platformsDescription: 'Selecciona las plataformas que tienes',
-  addGame: 'Añadir Juegos'
+  addGame: 'Añadir Juegos',
+  rateLimit: 'Límite de peticiones diarias excedido, por favor intenta mañana',
+  genericError: 'Algo salió mal'
 }
 
 const itContent: ExtendedContent = {
@@ -91,7 +95,9 @@ const itContent: ExtendedContent = {
   gameRemoved: 'Gioco rimosso',
   welcome: 'Benvenuto',
   platformsDescription: 'Seleziona le piattaforme che possiedi',
-  addGame: 'Aggiungi giochi'
+  addGame: 'Aggiungi giochi',
+  rateLimit: 'Limite di richieste giornaliere superato, per favore riprova domani',
+  genericError: 'Qualcosa è andato storto'
 }
 
 const content = {
