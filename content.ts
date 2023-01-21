@@ -99,8 +99,13 @@ const itContent: ExtendedContent = {
   rateLimit: 'Limite di richieste giornaliere superato, per favore riprova domani',
   genericError: 'Qualcosa è andato storto'
 }
+export const supportedLangs = ['en', 'es', 'it'] as const
+export type SupportedLangs = (typeof supportedLangs)[number]
+type Content = {
+  [key in SupportedLangs]: ExtendedContent
+}
 
-const content = {
+const content: Content = {
   es: esContent,
   en: engContent,
   it: itContent
