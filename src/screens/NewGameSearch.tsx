@@ -1,4 +1,3 @@
-import Constants from 'expo-constants'
 import React, { useRef, useState } from 'react'
 import { FlatList, TextInput as ReactTextInput, View } from 'react-native'
 import {
@@ -18,10 +17,9 @@ import Container from '../components/Container'
 import GameImageTile from '../components/GameImageTile'
 import PlatformTags from '../components/PlatformTags'
 import { Game, GameRoute } from '../types'
+import { searchGames } from '../utils/client'
 import { getText } from '../utils/locale'
 import { retrieveGame } from '../utils/localStorage'
-
-const RAWG_KEY = Constants?.manifest?.extra?.RAWG_KEY
 
 function NewGame({ navigation }: { navigation: NavigationStackProp }) {
   const route: GameRoute = navigation.getParam('route')
@@ -34,11 +32,8 @@ function NewGame({ navigation }: { navigation: NavigationStackProp }) {
   const searchRef = useRef<ReactTextInput>(null)
 
   async function queryGames(query: string) {
-    const url = `https://api.rawg.io/api/games?search=${query}&key=${RAWG_KEY}`
+    const gamesApi = await searchGames(query)
 
-    const response = await fetch(url)
-
-    const { results: gamesApi } = await response.json()
     setLoading(false)
     setGames(gamesApi)
   }

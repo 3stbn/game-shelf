@@ -1,5 +1,4 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import Constants from 'expo-constants'
 import _ from 'lodash'
 import React, { useEffect, useState } from 'react'
 import { Platform, ScrollView, ToastAndroid, View } from 'react-native'
@@ -15,12 +14,10 @@ import Loading from '../components/Loading'
 import PlatformTags from '../components/PlatformTags'
 import { GameRoute, GameStatus, Ownership, PlatformsAccumulator, SavedGame, SelectedPlatform } from '../types'
 import { arrayCompare } from '../utils/array'
+import { getGame } from '../utils/client'
 import { filterGameProperties } from '../utils/filterGameProperties'
 import { getText } from '../utils/locale'
 import { removeGame, storeGame } from '../utils/localStorage'
-
-const IGDB_USER_KEY = Constants?.manifest?.extra?.IGDB_USER_KEY ?? ''
-const RAWG_KEY = Constants?.manifest?.extra?.RAWG_KEY ?? ''
 
 const Game = ({ navigation }: { navigation: NavigationStackProp }) => {
   const gameParam: SavedGame = navigation.getParam('game')
@@ -95,43 +92,10 @@ const Game = ({ navigation }: { navigation: NavigationStackProp }) => {
 
   async function loadGameDetails(id: string) {
     setLoading(true)
-    const url = `https://api.rawg.io/api/games/${id}?key=${RAWG_KEY}`
-    const response = await fetch(url)
-    const gameApi: SavedGame = await response.json()
+    const gameApi = await getGame(id)
 
     setLoading(false)
     return gameApi
-  }
-
-  // Disabling igdb call as auth method changed
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async function loadGameCover(gameRawg: SavedGame) {
-    const gameUrl = `https://api-v3.igdb.com/games`
-    const coverUrl = `https://api-v3.igdb.com/covers`
-    const responseCover = await fetch(gameUrl, {
-      headers: {
-        Accept: 'application/json',
-        'user-key': '905b60bca60c9449509e2bcf51e65e87'
-      },
-      method: 'POST',
-      body: `fields cover; limit 1; where slug = "${gameRawg.slug}";`
-    })
-    const covers = await responseCover.json()
-    if (covers.length === 0 || !covers[0].cover) {
-      return null
-    }
-
-    const coverResponse = await fetch(coverUrl, {
-      headers: {
-        Accept: 'application/json',
-        'user-key': IGDB_USER_KEY
-      },
-      method: 'POST',
-      body: `fields image_id; limit 1; where id = ${covers[0].cover};`
-    })
-    const imageIds = await coverResponse.json()
-
-    return imageIds[0].image_id
   }
 
   function handleSelectedPlatforms(selected: SelectedPlatform) {
