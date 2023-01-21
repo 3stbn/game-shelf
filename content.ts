@@ -64,9 +64,40 @@ const esContent: ExtendedContent = {
   addGame: 'Añadir Juegos'
 }
 
+const itContent: ExtendedContent = {
+  home: 'Home',
+  newGame: 'Nuovo gioco',
+  released: 'Pubblicato',
+  game: 'Gioco',
+  searchGame: 'Cerca gioco',
+  backlog: 'In libreria',
+  inProgress: 'In corso',
+  played: 'Giocato',
+  completed: 'Completato',
+  wishList: 'Lista dei desideri',
+  summary: 'Riassunto',
+  metaScore: 'Metascore',
+  owned: 'Posseduto',
+  hours: 'Ore',
+  addNewGame: 'Aggiungi gioco nuovo',
+  close: 'Chiudi',
+  delete: 'Elimina',
+  update: 'Aggiorna',
+  save: 'Salva',
+  noSearchResults: 'Nessun risultato di ricerca',
+  newGameName: 'Nome del gioco',
+  noGamesDescription: 'Inizia ad aggiungere alcuni giochi alla tua collezione',
+  gameSaved: 'Gioco salvato',
+  gameRemoved: 'Gioco rimosso',
+  welcome: 'Benvenuto',
+  platformsDescription: 'Seleziona le piattaforme che possiedi',
+  addGame: 'Aggiungi giochi'
+}
+
 const content = {
   es: esContent,
-  en: engContent
+  en: engContent,
+  it: itContent
 }
 
 export default content
