@@ -1,40 +1,37 @@
 {
-    "expo": {
-        "name": "Game shelf",
-        "slug": "game-shelf",
-        "platforms": ["ios", "android", "web"],
-        "version": "1.0.1",
-        "sdkVersion": "37.0.0",
-        "privacy": "unlisted",
-        "orientation": "portrait",
-        "icon": "./assets/icon.png",
-        "splash": {
-            "image": "./assets/splash.png",
-            "resizeMode": "contain",
-            "backgroundColor": "#3B3940"
-        },
-        "updates": {
-            "fallbackToCacheTimeout": 1000
-        },
-        "assetBundlePatterns": ["**/*"],
-        "ios": {
-            "supportsTablet": true,
-            "bundleIdentifier": "com.gameshelfcollection.gameshelfcollection",
-            "icon": "./assets/icon.png"
-        },
-        "android": {
-            "versionCode": 3,
-            "package": "com.gameshelfcollection.gameshelfcollection",
-            "icon": "./assets/icon.png",
-            "adaptiveIcon": {
-                "foregroundImage": "./assets/adaptative-icon.png",
-                "backgroundColor": "#3B3940"
-            },
-            "permissions": []
-        },
-        "extra": {
-            "IGDB_USER_KEY": "",
-            "RAWG_KEY": ""
-        }
-    }
+  "expo": {
+    "name": "Game shelf",
+    "slug": "game-shelf",
+    "platforms": ["ios", "android", "web"],
+    "version": "1.0.1",
+    "sdkVersion": "47.0.0",
+    "privacy": "unlisted",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#3B3940"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 1000
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.gameshelfcollection.gameshelfcollection",
+      "icon": "./assets/icon.png"
+    },
+    "android": {
+      "versionCode": 3,
+      "package": "com.gameshelfcollection.gameshelfcollection",
+      "icon": "./assets/icon.png",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptative-icon.png",
+        "backgroundColor": "#3B3940"
+      },
+      "permissions": []
+    },
+    "extra": {}
+  }
 }

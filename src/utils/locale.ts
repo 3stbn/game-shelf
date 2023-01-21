@@ -1,17 +1,19 @@
-import content from '../../content'
-import { Platform, NativeModules } from 'react-native'
+import { NativeModules, Platform } from 'react-native'
+import content, { LocalizedKeys } from '../../content'
 
-const supportedLangs = ['en', 'es']
+const supportedLangs = ['en', 'es'] as const
+
+type SupportedLangs = (typeof supportedLangs)[number]
 
 const deviceLanguage =
-    Platform.OS === 'ios'
-        ? NativeModules.SettingsManager.settings.AppleLocale || NativeModules.SettingsManager.settings.AppleLanguages[0] //iOS 13
-        : NativeModules.I18nManager.localeIdentifier
+  Platform.OS === 'ios'
+    ? NativeModules.SettingsManager.settings.AppleLocale || NativeModules.SettingsManager.settings.AppleLanguages[0] //iOS 13
+    : NativeModules.I18nManager.localeIdentifier
 
 const device_lang = deviceLanguage.slice(0, 2)
 
-const lang = supportedLangs.includes(device_lang) ? device_lang : 'en'
+const lang: SupportedLangs = supportedLangs.includes(device_lang) ? device_lang : 'en'
 
-export function getText(text: string): string {
-    return content[lang][text] ? content[lang][text] : text
+export function getText(text: LocalizedKeys): string {
+  return content[lang][text]
 }
