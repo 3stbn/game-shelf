@@ -25,7 +25,7 @@ const config: ExpoConfig = {
     icon: './assets/icon.png'
   },
   android: {
-    versionCode: 5,
+    versionCode: 6,
     package: 'com.gameshelfcollection.gameshelfcollection',
     icon: './assets/icon.png',
     adaptiveIcon: {
